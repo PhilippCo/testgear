@@ -1,9 +1,15 @@
 
 
-class calibrator:
+class instrument:
     def __init__(self, resource):
         self.resource = resource
-        
+
+    def close:
+        self.resource.close()
+
+
+
+class calibrator(instrument):      
     def output(self, state):
         print("not implemented!")
 
@@ -24,5 +30,14 @@ class calibrator:
 
     def get_functions(self):
         pass
+
+
+class scanner(instrument):
+    pass
+
+
+class dmm(instrument):
+    pass
+
 
     
