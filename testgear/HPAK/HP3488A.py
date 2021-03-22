@@ -1,6 +1,7 @@
 
+import testgear.base_classes as base
 
-class HP3488A(scanner):
+class HP3488A(base.scanner):
     def get_modules(self):
         return ["no card"]
     
