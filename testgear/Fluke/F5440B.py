@@ -5,7 +5,8 @@ class F5440B(base.calibrator):
 
     def output(self, state):
         if state:
-            self.resource.write("OPER")
+            self.write("OPER")
         else:
-            self.resource.write("STBY")
-    
+            self.write("STBY")
+
+
