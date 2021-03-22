@@ -69,7 +69,14 @@ class scanner(instrument):
 
 
 class dmm(instrument):
-    pass
+    
+    def set_range(self, value=0, autorange=False):
+        """sets the correct range for the given value"""
+        pass
+
+    def get_value(self):
+        """returns the actual value"""
+        return np.nan
 
 
     
