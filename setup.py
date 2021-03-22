@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='testpkg',
-    version='1.0.0',
+    name='testgear',
+    version='0.0.1',
     url='https://github.com/PhilippCo/testgear',
     author='Philipp Cochems',
     author_email='philipp.cochems@gmail.com',
