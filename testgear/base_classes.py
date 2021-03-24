@@ -48,6 +48,9 @@ class calibrator(instrument):
     def guard(self, state):
         pass
 
+    def external_sense(self, state):
+        print("not implemented!")
+
     def set_value(self, value):
         pass
 
@@ -79,4 +82,5 @@ class dmm(instrument):
         return np.nan
 
 
-    
+class pwrsupply(instrument):
+    pass
