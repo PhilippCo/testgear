@@ -19,6 +19,10 @@ class instrument:
         self.resource = instrument.rm.open_resource(visastr)
         self.init() #call function to initialize instrument
 
+    def set_timeout(self, timeout):
+        """set instrument timeout in seconds"""
+        self.resource.timeout = int(timeout * 1000)
+
     def init(self):
         """overload this method if initialization is needed"""
         pass
@@ -65,6 +69,12 @@ class calibrator(instrument):
 
     def get_functions(self):
         return []
+
+    def set_range(self, range):
+        pass
+
+    def get_range(self):
+        return np.nan
 
 
 class scanner(instrument):
