@@ -1,4 +1,4 @@
-
+"""Knick JS3010 Voltage and Current Calibrator"""
 
 import testgear.base_classes as base
 

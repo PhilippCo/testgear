@@ -1,8 +1,8 @@
-"""Fluke 5440B Voltage Calibrator"""
+"""Fluke 5450A Resistance Calibrator"""
 
 import testgear.base_classes as base
 
-class F5440B(base.calibrator):
+class F5450A(base.calibrator):
 
     def output(self, state):
         if state:
