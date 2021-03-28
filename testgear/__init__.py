@@ -1,5 +1,4 @@
 """import submodules"""
-import testgear.Datron as Datron
 import testgear.Fluke as Fluke
 import testgear.HPAK as HPAK # HP / Agilent / Keysight
 import testgear.Keithley as Keithley
