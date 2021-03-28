@@ -8,13 +8,17 @@ class instrument:
 
     rm = None #Class variable for pyvisa resource manager
 
-    def __init__(self, visastr):
+    def __init__(self, visastr=None, gpib=None, ip="192.168.2.88"):
         """open VISA instrument"""
 
         #create pyvisa instance if needed
         if instrument.rm == None:
             instrument.rm = pyvisa.ResourceManager('@py')
             print("pyvisa initialized..")
+
+        #build VISA string if not given
+        if visastr == None:
+            visastr = "TCPIP::{0:s}::gpib0,{1:d}::INSTR".format(ip, gpib)
 
         self.resource = instrument.rm.open_resource(visastr)
         self.init() #call function to initialize instrument
