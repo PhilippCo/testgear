@@ -1,11 +1,5 @@
 import testgear.base_classes as base
 
-# K182.write("P0X") #digital Filters off   needed?
-# K182.write("O0X") #analog Filters off   needed?
-# K182.write("N0X") #all Filters off
-# K182.write("S2X") #100ms integration time
-
-
 class K182(base.dmm):
     def init(self):
         self.write("L1X") #reset instrument
