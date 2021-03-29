@@ -86,12 +86,18 @@ class scanner(instrument):
 
 
 class dmm(instrument):
-    
+    def read_avg(self, averages):
+        readings = []
+        for _ in range(0, averages):
+            readings.append(self.get_reading())
+        return np.mean(readings), np.std(readings)
+
+
     def set_range(self, value=0, autorange=False):
         """sets the correct range for the given value"""
         pass
 
-    def get_value(self):
+    def get_reading(self):
         """returns the actual value"""
         return np.nan
 
