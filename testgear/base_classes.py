@@ -104,3 +104,7 @@ class dmm(instrument):
 
 class pwrsupply(instrument):
     pass
+
+
+class siggen(instrument):
+    pass
