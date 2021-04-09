@@ -12,21 +12,21 @@ class K182(base.dmm):
         self.write("S2X") #100ms integration time
 
 
-    def set_range(self, value=None, autorange=False):
+    def set_function(self, function="VDC", range=None, autorange=True):
         if autorange:
             self.write("R0X")
         else:
-            if value <= 3e-3:
+            if range <= 3e-3:
                 self.write("R1X") #set 3mV range
-            elif value <= 30e-3:
+            elif range <= 30e-3:
                 self.write("R2X") #set 30mV Range
-            elif value <= 300e-3:
+            elif range <= 300e-3:
                 self.write("R3X") #set 300mV Range
-            elif value <= 3:
+            elif range <= 3:
                 self.write("R4X") #set 3V Range
             else:
                 self.write("R5X") #set 30V Range
 
 
-    def get_reading(self):
+    def get_reading(self, channel=1):
         return float(self.read())

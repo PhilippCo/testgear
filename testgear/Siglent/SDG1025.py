@@ -36,9 +36,9 @@ class SDG1025(base.siggen):
             self.write("C1{0:d}:BSWV HLEV,{1:f}".format(channel, Vhigh))
             self.write("C1{0:d}:BSWV LLEV,{1:f}".format(channel, Vlow))
         elif Vrms is not None:
-            rms = 1 #add calculation of rms based on amp and offset
+            #rms = 1 #add calculation of rms based on amp and offset
             print("not supported yet!")
-            self.write("C1{0:d}:BSWV AMP,{1:f}".format(channel, rms))
+            self.write("C1{0:d}:BSWV AMP,{1:f}".format(channel, 2*(2**0.5)*Vrms))
 
         if Offset is not None:
             self.write("C1{0:d}:BSWV OFST,{1:f}".format(channel, Offset))

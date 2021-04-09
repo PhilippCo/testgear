@@ -18,7 +18,10 @@ class instrument:
 
         #gpib address given
         if gpib is not None:
-            visastr = "TCPIP::{0:s}::gpib0,{1:d}::INSTR".format(gwip, gpib)
+            if gwip is not None:
+                visastr = "TCPIP::{0:s}::gpib0,{1:d}::INSTR".format(gwip, gpib)
+            else:
+                visastr = "GPIB0::{0:d}::INSTR".format(gpib)
 
         #ip address given
         if ip is not None:

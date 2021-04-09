@@ -53,13 +53,13 @@ class JS3010(base.calibrator):
     def get_function(self):
         answer = self.query("R MODE")
         if answer == "MODE A":
-            return 'IDC'
+            return 'DCA'
         elif answer == "MODE V":
-            return 'VDC'
+            return 'DCV'
         else:
             return "ERROR"
 
 
     def get_functions(self):
-        return ['VDC', 'IDC']
+        return ['DCV', 'DCA']
     
