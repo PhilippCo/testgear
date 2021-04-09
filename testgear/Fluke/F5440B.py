@@ -4,17 +4,25 @@ import testgear.base_classes as base
 
 class F5440B(base.source):
 
-    def set_output(self, voltage=None, current=None, enabled=True):
+    def set_output(self, resistance=None, voltage=None, current=None, enabled=True, frequency=None, channel=1):
         """set output. current isn't supported"""
-        self.output(enabled)
-        self.set_value(voltage)
-
-
-    def output(self, state):
-        if state:
+        if enabled:
             self.write("OPER")
         else:
             self.write("STBY")
+
+        if voltage is not None:
+            self.write("SOUT {0:0.8g}; OPER".format(voltage))
+
+    
+    def get_output(self):
+        """return an object which reflects the output conditions"""
+        obj = base.output_status()
+
+        obj.set_voltage = float(self.query("GOUT"))
+
+        return obj
+
 
     def guard(self, state):
         """Guard configuration:
@@ -48,21 +56,4 @@ class F5440B(base.source):
         else:
             self.write("ISNS")
 
-
-    def set_value(self, value):
-        """set output voltage"""
-        self.write("SOUT {0:0.8g}; OPER".format(value))
-
-
-    def get_value(self):
-        """get actual output value"""
-        return float(self.query("GOUT"))
-
-
-    def get_function(self):
-        return 'VDC'
-
-
-    def get_functions(self):
-        return ['VDC']
     
