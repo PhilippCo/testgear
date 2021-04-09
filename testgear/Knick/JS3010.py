@@ -4,7 +4,13 @@ import testgear.base_classes as base
 
 class JS3010(base.calibrator):
 
-    output_value = 0 #stores the output to mimic an output switch
+    def set_output(self, voltage=None, current=None, enabled=True):
+        """set output. current isn't supported"""
+        #implement automatic switching between voltage and current
+        self.output(enabled)
+        self.set_value(voltage)
+
+    output_value = 0 #stores the output to mimic an output switch <- Klassenvariable?
 
     def init(self):
         self.output_value = self.get_value()
