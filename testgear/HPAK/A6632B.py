@@ -2,33 +2,34 @@
 import testgear.base_classes as base
 
 class A6632B(base.source):
-    def set_output(self, voltage=None, current=None, enabled=True):
+    def set_output(self, resistance=None, voltage=None, current=None, enabled=True, frequency=None, channel=1):
         if enabled:
             self.write("OUTP ON")
         else:
             self.write("OUTP OFF")
 
         if voltage is not None:
-            self.set_voltage(voltage)
+            self.write("VOLT {0:f}".format(voltage))
 
         if current is not None:
-            self.set_current(current)
+            self.write("CURR {0:f}".format(current))
 
 
-    def set_voltage(self, value):
-        self.write("VOLT {0:f}".format(value))
+    def get_output(self):
+        """return an object which reflects the output conditions"""
+        obj = base.output_status()
 
-    def set_current(self, value):
-        self.write("CURR {0:f}".format(value))
+        obj.set_voltage = float(self.query("VOLTage?"))
+        obj.set_current = float(self.query("CURRent?"))
 
-    def get_act_voltage(self):
-        return float(self.query("MEASure:VOLTage?"))
+        obj.voltage = float(self.query("MEASure:VOLTage?"))
+        obj.current = float(self.query("MEASure:CURRent?"))
 
-    def get_act_current(self):
-        return float(self.query("MEASure:CURRent?"))
+        if self.query("OUTP?").strip() == "1":
+            obj.enabled = True
+        else:
+            obj.enabled = False
 
-    def get_set_voltage(self):
-        return float(self.query("VOLTage?"))
+        return obj
 
-    def get_set_current(self):
-        return float(self.query("CURRent?"))
+

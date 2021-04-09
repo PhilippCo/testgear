@@ -81,9 +81,6 @@ class scope(instrument):
     pass
 
 
-#diese Klasse zurückgeben bei get_output()
-#dann get_output().voltage  um aktuelle Spannung zu lesen
-
 class output_status:
     def __init__(self):
         self.enabled     = False
@@ -94,8 +91,24 @@ class output_status:
         self.set_current = np.nan
         self.current     = np.nan
         
-        self.frequency    = np.nan
+        self.frequency   = np.nan
 
         self.resistance  = np.nan
 
-#ggf. property node zum setzen einiger werte nutzen
+
+    def __repr__(self):
+        string = "\n"
+        string += "enabled:\t{0}\n".format(self.enabled)
+        string += "\n"
+        string += "set_voltage:\t{0:0.6f} V\n".format(self.set_voltage)
+        string += "set_current:\t{0:0.6f} A\n".format(self.set_current)
+        string += "\n"
+        string += "voltage:\t{0:0.6f} V\n".format(self.voltage)
+        string += "current:\t{0:0.6f} A\n".format(self.current)
+        string += "\n"
+        string += "frequency:\t{0:0.6f} Hz\n".format(self.frequency)
+        string += "\n"
+        string += "resistance:\t{0:0.6f} Ohm\n".format(self.resistance)
+        return string
+
+   

@@ -1,6 +1,7 @@
 """Fluke 5450A Resistance Calibrator"""
 
 import testgear.base_classes as base
+import numpy as np
 
 class F5450A(base.source):
     def reset(self):
@@ -38,7 +39,8 @@ class F5450A(base.source):
         obj.resistance = float(self.query("VALUE;"))
 
         if obj.resistance > 1e30:
-            obj.enabled = False
+            obj.enabled    = False
+            obj.resistance = np.nan
         else:
             obj.enabled = True
 
