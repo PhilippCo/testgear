@@ -1,7 +1,7 @@
 
 import testgear.base_classes as base
 
-class HP3458A(base.dmm):
+class HP3458A(base.meter):
     def init(self):
         self.write("END ALWAYS")
         self.set_timeout(30)

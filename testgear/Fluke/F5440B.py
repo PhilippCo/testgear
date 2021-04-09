@@ -2,7 +2,7 @@
 
 import testgear.base_classes as base
 
-class F5440B(base.calibrator):
+class F5440B(base.source):
 
     def set_output(self, voltage=None, current=None, enabled=True):
         """set output. current isn't supported"""

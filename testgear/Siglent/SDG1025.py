@@ -17,7 +17,7 @@
 
 import testgear.base_classes as base
 
-class SDG1025(base.siggen):
+class SDG1025(base.source):
     def reset(self):
         self.write("*RST")
 

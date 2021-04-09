@@ -2,7 +2,7 @@
 
 import testgear.base_classes as base
 
-class JS3010(base.calibrator):
+class JS3010(base.source):
 
     def set_output(self, voltage=None, current=None, enabled=True):
         """set output. current isn't supported"""

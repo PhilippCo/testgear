@@ -1,7 +1,7 @@
 
 import testgear.base_classes as base
 
-class A34970A(base.dmm, base.scanner):
+class A34970A(base.meter):
     def reset(self):
         self.write("*RST")
     

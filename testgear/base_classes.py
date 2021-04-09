@@ -56,40 +56,11 @@ class instrument:
 
 
 
-class calibrator(instrument):      
-    def set_output(self, voltage=None, current=None, enabled=True):
-        pass
-
-    def guard(self, state):
-        pass
-
-    def external_sense(self, state):
-        print("not implemented!")
-
-    def get_value(self):
-        return np.nan
-    
-    def set_function(self, function):
-        pass
-
-    def get_function(self):
-        return None
-
-    def get_functions(self):
-        return []
-
-    def set_range(self, range):
-        pass
-
-    def get_range(self):
-        return np.nan
-
-
-class scanner(instrument):
+class source(instrument):
     pass
 
 
-class dmm(instrument):
+class meter(instrument):
     def read_avg(self, averages, channel=None):
         readings = []
         for _ in range(0, averages):
@@ -106,21 +77,25 @@ class dmm(instrument):
         return np.nan
 
 
-class pwrsupply(instrument):
-    def set_output(self, voltage=None, current=None, enabled=True, channel=1):
-        pass
-
-    def get_output(self):
-        """returns set values: voltage, current, output state"""
-        return np.nan, np.nan, False
-
-    def read_output(self):
-        """returns current values: voltage, current"""
-        return np.nan, np.nan
-
-
-class siggen(instrument):
-    pass
-
 class scope(instrument):
     pass
+
+
+#diese Klasse zurückgeben bei get_output()
+#dann get_output().voltage  um aktuelle Spannung zu lesen
+
+class output_status:
+    def __init__(self):
+        self.enabled     = False
+
+        self.set_voltage = np.nan
+        self.voltage     = np.nan
+        
+        self.set_current = np.nan
+        self.current     = np.nan
+        
+        self.frequency    = np.nan
+
+        self.resistance  = np.nan
+
+#ggf. property node zum setzen einiger werte nutzen

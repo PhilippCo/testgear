@@ -4,7 +4,7 @@ import testgear.base_classes as base
 # VISA String: 'ASRL/dev/ttyACM0::INSTR'
 
 
-class KA3005P(base.pwrsupply):
+class KA3005P(base.source):
     def set_output(self, voltage=None, current=None, enabled=True):
         if enabled:
             self.write("OUT1")
@@ -24,20 +24,20 @@ class KA3005P(base.pwrsupply):
 
 
     def get_output(self):
+        """return an object which refelcts the output conditions"""
+        obj = base.output_status()
+
         if self.get_status() & 0x40:
-            enabled = True
+            obj.enabled = True
         else:
-            enabled = False
+            obj.enabled = False
 
-        voltage = float(self.query("VSET1?"))
-        current = float(self.query("ISET1?"))
-        return voltage, current, enabled
-
-
-    def read_output(self):
-        voltage = float(self.query("VOUT1?"))
-        current = float(self.query("IOUT1?"))
-        return voltage, current
+        obj.set_voltage = float(self.query("VSET1?"))
+        obj.set_current = float(self.query("ISET1?"))
+        
+        obj.voltage = float(self.query("VOUT1?"))
+        obj.current = float(self.query("IOUT1?"))
+        return obj
 
 
     def over_voltage_protection(self, state=False):

@@ -1,6 +1,6 @@
 import testgear.base_classes as base
 
-class K182(base.dmm):
+class K182(base.meter):
     def init(self):
         self.write("L1X") #reset instrument
         self.write("B1X") #6.5 digit mode

@@ -2,7 +2,7 @@
 
 import testgear.base_classes as base
 
-class F5450A(base.calibrator):
+class F5450A(base.source):
     def reset(self):
         self.write("CLEAR;")
 
@@ -22,24 +22,25 @@ class F5450A(base.calibrator):
             self.write("EXT GUARD ON;")
 
 
-    def set_value(self, value=None, open=False):
-        """set output voltage"""
-        if open:
+    def set_output(self, resistance=None, voltage=None, current=None, enabled=True, frequency=None, channel=1):
+        if not enabled:
             self.write("OPEN;")
         else:    
-            self.write("OUTPUT {0:d};".format(value))
-        return self.get_value()
+            self.write("OUTPUT {0:d};".format(resistance))
 
+        self.get_output()
+        
+    
+    def get_output(self):
+        """return an object which reflects the output conditions"""
+        obj = base.output_status()
 
-    def get_value(self):
-        """get actual output value"""
-        return float(self.query("VALUE;"))
+        obj.resistance = float(self.query("VALUE;"))
 
+        if obj.resistance > 1e30:
+            obj.enabled = False
+        else:
+            obj.enabled = True
 
-    def get_function(self):
-        return 'OHMS'
-
-
-    def get_functions(self):
-        return ['OHMS']
+        return obj
     

@@ -1,6 +1,6 @@
 import testgear.base_classes as base
 
-class K617(base.dmm):
+class K617(base.meter):
     def init(self):
         self.write("G1X") #switch prefix off
 

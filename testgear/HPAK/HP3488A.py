@@ -2,7 +2,7 @@
 
 import testgear.base_classes as base
 
-class HP3488A(base.scanner):
+class HP3488A(base.instrument):
     def init(self):
         self.cards = []
         for slot in range(1, 6):
