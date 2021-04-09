@@ -4,6 +4,12 @@ import testgear.base_classes as base
 
 class F5440B(base.calibrator):
 
+    def set_output(self, voltage=None, current=None, enabled=True):
+        """set output. current isn't supported"""
+        self.output(enabled)
+        self.set_value(voltage)
+
+
     def output(self, state):
         if state:
             self.write("OPER")

@@ -2,11 +2,18 @@
 import testgear.base_classes as base
 
 class A6632B(base.pwrsupply):
-    def set_output(self, state):
-        if state:
+    def set_output(self, voltage=None, current=None, enabled=True):
+        if enabled:
             self.write("OUTP ON")
         else:
             self.write("OUTP OFF")
+
+        if voltage is not None:
+            self.set_voltage(voltage)
+
+        if current is not None:
+            self.set_current(current)
+
 
     def set_voltage(self, value):
         self.write("VOLT {0:f}".format(value))

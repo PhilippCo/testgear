@@ -28,12 +28,17 @@ class K617(base.dmm):
         return self.query("U0X")
 
 
-    def set_output(self, value=None, enabled=True):
+    def set_output(self, voltage=None, current=None, enabled=True):
+        """set internal voltage source. current isn't supported"""
         if enabled == True:
             self.write("O1X")
         else:
             self.write("O0X")
     
-        if value is not None:
-            self.write("V{0:0.5g}X".format(value))
+        if voltage is not None:
+            self.write("V{0:0.2f}X".format(voltage))
 
+
+    def get_output(self):
+        """returns set values: voltage, current, output state"""
+        return np.nan, np.nan, False

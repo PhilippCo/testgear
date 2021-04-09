@@ -57,17 +57,14 @@ class instrument:
 
 
 class calibrator(instrument):      
-    def output(self, state):
-        print("not implemented!")
+    def set_output(self, voltage=None, current=None, enabled=True):
+        pass
 
     def guard(self, state):
         pass
 
     def external_sense(self, state):
         print("not implemented!")
-
-    def set_value(self, value):
-        pass
 
     def get_value(self):
         return np.nan
@@ -110,7 +107,16 @@ class dmm(instrument):
 
 
 class pwrsupply(instrument):
-    pass
+    def set_output(self, voltage=None, current=None, enabled=True, channel=1):
+        pass
+
+    def get_output(self):
+        """returns set values: voltage, current, output state"""
+        return np.nan, np.nan, False
+
+    def read_output(self):
+        """returns current values: voltage, current"""
+        return np.nan, np.nan
 
 
 class siggen(instrument):
