@@ -22,13 +22,19 @@ class SDG1025(base.source):
         self.write("*RST")
 
 
-    def set_output(self, state, channel=1):
-        if state:
+    def set_output(self, voltage=None, current=None, enabled=True, frequency=None, resistance=None, channel=1):
+        if enabled:
             self.write("C{0:d}:OUTP ON".format(channel))
         else:
             self.write("C{0:d}:OUTP OFF".format(channel))
 
-    
+        if voltage is not None:
+            self.set_output_level(Vrms=voltage, Offset=0, channel=channel)
+
+        if frequency is not None:
+            self.write("C1{0:d}:BSWV FRQ,{1:f}".format(channel, frequency))
+        
+
     def get_output(self, channel=1):
         """return an object which reflects the output conditions"""
         obj = base.output_status()
@@ -46,16 +52,12 @@ class SDG1025(base.source):
             self.write("C1{0:d}:BSWV LLEV,{1:f}".format(channel, Vlow))
         elif Vrms is not None:
             #rms = 1 #add calculation of rms based on amp and offset
-            print("not supported yet!")
+            #print("not supported yet!")
             self.write("C1{0:d}:BSWV AMP,{1:f}".format(channel, 2*(2**0.5)*Vrms))
 
         if Offset is not None:
             self.write("C1{0:d}:BSWV OFST,{1:f}".format(channel, Offset))
 
-
-
-    def set_frequency(self, frequency, channel=1):
-        self.write("C1{0:d}:BSWV FRQ,{1:f}".format(channel, frequency))
 
 
     def set_period(self, period, channel=1):
