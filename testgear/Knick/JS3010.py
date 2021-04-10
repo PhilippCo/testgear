@@ -1,36 +1,73 @@
 """Knick JS3010 Voltage and Current Calibrator"""
 
 import testgear.base_classes as base
+import numpy as np
 
 class JS3010(base.source):
+    def init(self):
+        output = self.get_output()
+        self.set_voltage = output.set_voltage
+        self.set_current = output.set_current
+
+
     def set_output(self, voltage=None, current=None, enabled=True, frequency=None, resistance=None, channel=1):
         """set output. current isn't supported"""
         #implement automatic switching between voltage and current
-        self.output(enabled)
-        self.set_value(voltage)
+        output = self.get_output()
+
+        if voltage is not None:
+            if output.set_voltage is np.nan:
+                self.write("P MODE V")
+            self.write("X OUT {0:0.7g}".format(voltage))
+                
+        elif current is not None: #if both are given only voltage will be applied
+            if output.set_current is np.nan:
+                self.write("P MODE A")
+            self.write("X OUT {0:0.7g}".format(current))
+
+
+        if enabled:
+            output = self.get_output()
+
+            if output.enabled == False: #output is off and needs to be switched back on
+                if output.set_voltage is not np.nan:
+                    self.set_output(voltage=self.set_voltage)
+                else:
+                    self.set_output(current=self.set_current)
+
+            self.set_voltage = output.set_voltage
+            self.set_current = output.set_current
+
+        else:
+            self.write("Z")
+
 
     
     def get_output(self, channel=1):
         """return an object which reflects the output conditions"""
         obj = base.output_status()
 
-        #obj.set_voltage = float(self.query("GOUT"))
+        mode     = self.query("R MODE").strip()
+        setvalue = float(self.query("R OUT").strip()[3:-1])
+
+        if mode == "MODE A":
+            obj.set_voltage = np.nan
+            obj.set_current = setvalue
+        else:
+            obj.set_voltage = setvalue
+            obj.set_current = np.nan
+
+        if setvalue == 0:
+            obj.enabled     = False
+            obj.set_voltage = self.set_voltage
+            obj.set_current = self.set_current
+        else:
+            obj.enabled = True
 
         return obj
 
 
     #output_value = 0 #stores the output to mimic an output switch <- Klassenvariable?
-
-    def init(self):
-        self.output_value = self.get_value()
-
-
-    def output(self, state):
-        if state:
-            self.set_value(self.output_value)
-        else:
-            self.write("Z")
-
 
     def guard(self, state):
         """Guard is not software controllable"""
@@ -47,32 +84,8 @@ class JS3010(base.source):
         pass
 
 
-    def set_value(self, value):
-        """set output voltage"""
-        self.output_value = value
-        self.write("X OUT {0:0.7g}".format(value))
 
 
-    def get_value(self):
-        """get actual output value"""
-        return float(self.query("R OUT").strip()[3:-1])
-
-
-    def set_function(self, function):
-        if function == "VDC":
-            self.write("P MODE V")
-        elif function == "IDC":
-            self.write("P MODE A")
-
-
-    def get_function(self):
-        answer = self.query("R MODE")
-        if answer == "MODE A":
-            return 'DCA'
-        elif answer == "MODE V":
-            return 'DCV'
-        else:
-            return "ERROR"
 
 
     
