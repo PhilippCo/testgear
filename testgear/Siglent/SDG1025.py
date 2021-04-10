@@ -28,6 +28,15 @@ class SDG1025(base.source):
         else:
             self.write("C{0:d}:OUTP OFF".format(channel))
 
+    
+    def get_output(self, channel=1):
+        """return an object which reflects the output conditions"""
+        obj = base.output_status()
+
+        #obj.set_voltage = float(self.query("GOUT"))
+
+        return obj
+
 
     def set_output_level(self, Vpp=None, Vrms=None, Offset=None, Vhigh=None, Vlow=0, channel=1):
         if Vpp is not None:

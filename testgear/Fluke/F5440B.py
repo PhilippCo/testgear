@@ -4,7 +4,7 @@ import testgear.base_classes as base
 
 class F5440B(base.source):
 
-    def set_output(self, resistance=None, voltage=None, current=None, enabled=True, frequency=None, channel=1):
+    def set_output(self, voltage=None, current=None, enabled=True, frequency=None, resistance=None, channel=1):
         """set output. current isn't supported"""
         if enabled:
             self.write("OPER")

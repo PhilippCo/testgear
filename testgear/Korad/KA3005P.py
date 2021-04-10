@@ -23,8 +23,8 @@ class KA3005P(base.source):
         return int.from_bytes( bytes(data, "utf-8"), "big")
 
 
-    def get_output(self):
-        """return an object which refelcts the output conditions"""
+    def get_output(self, channel=1):
+        """return an object which reflects the output conditions"""
         obj = base.output_status()
 
         if self.get_status() & 0x40:

@@ -3,14 +3,23 @@
 import testgear.base_classes as base
 
 class JS3010(base.source):
-
-    def set_output(self, voltage=None, current=None, enabled=True):
+    def set_output(self, voltage=None, current=None, enabled=True, frequency=None, resistance=None, channel=1):
         """set output. current isn't supported"""
         #implement automatic switching between voltage and current
         self.output(enabled)
         self.set_value(voltage)
 
-    output_value = 0 #stores the output to mimic an output switch <- Klassenvariable?
+    
+    def get_output(self, channel=1):
+        """return an object which reflects the output conditions"""
+        obj = base.output_status()
+
+        #obj.set_voltage = float(self.query("GOUT"))
+
+        return obj
+
+
+    #output_value = 0 #stores the output to mimic an output switch <- Klassenvariable?
 
     def init(self):
         self.output_value = self.get_value()
@@ -66,6 +75,4 @@ class JS3010(base.source):
             return "ERROR"
 
 
-    def get_functions(self):
-        return ['DCV', 'DCA']
     

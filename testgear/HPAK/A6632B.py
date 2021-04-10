@@ -15,7 +15,7 @@ class A6632B(base.source):
             self.write("CURR {0:f}".format(current))
 
 
-    def get_output(self):
+    def get_output(self, channel=1):
         """return an object which reflects the output conditions"""
         obj = base.output_status()
 

@@ -32,7 +32,7 @@ class F5450A(base.source):
         self.get_output()
         
     
-    def get_output(self):
+    def get_output(self, channel=1):
         """return an object which reflects the output conditions"""
         obj = base.output_status()
 
