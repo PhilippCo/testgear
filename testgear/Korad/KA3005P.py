@@ -5,7 +5,7 @@ import testgear.base_classes as base
 
 
 class KA3005P(base.source):
-    def set_output(self, voltage=None, current=None, enabled=True):
+    def set_output(self, voltage=None, current=None, enabled=True, frequency=None, resistance=None, channel=1):
         if enabled:
             self.write("OUT1")
         else:
@@ -52,3 +52,11 @@ class KA3005P(base.source):
             self.write("OCP1")
         else:
             self.write("OCP0")
+
+
+    def store_config(self, memory):
+        self.write("SAV{0:d}".format(memory))
+
+
+    def load_config(self, memory):
+        self.write("RCL{0:d}".format(memory))
