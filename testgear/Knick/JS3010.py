@@ -5,14 +5,20 @@ import numpy as np
 
 class JS3010(base.source):
     def init(self):
+        self.set_voltage = 0
+        self.set_current = 0
+
         output = self.get_output()
         self.set_voltage = output.set_voltage
         self.set_current = output.set_current
 
 
+    def default_VISA(self):
+        return 'TCPIP::192.168.2.88::gpib0,11::INSTR'
+
+
     def set_output(self, voltage=None, current=None, enabled=True, frequency=None, resistance=None, channel=1):
-        """set output. current isn't supported"""
-        #implement automatic switching between voltage and current
+        """set output"""
         output = self.get_output()
 
         if voltage is not None:
@@ -66,22 +72,6 @@ class JS3010(base.source):
 
         return obj
 
-
-    #output_value = 0 #stores the output to mimic an output switch <- Klassenvariable?
-
-    def guard(self, state):
-        """Guard is not software controllable"""
-        pass
-
-
-    def div(self, state):
-        """Divider is accessible via an additional connector"""
-        pass
-
-
-    def external_sense(self, state):
-        """4W is done in hardware"""
-        pass
 
 
 

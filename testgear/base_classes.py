@@ -16,25 +16,20 @@ class instrument:
             instrument.rm = pyvisa.ResourceManager('@py')
             print("pyvisa initialized..")
 
-        default = self.default_VISA()
+        #gpib address given
+        if gpib is not None:
+            if gwip is not None:
+                visastr = "TCPIP::{0:s}::gpib0,{1:d}::INSTR".format(gwip, gpib)
+            else:
+                visastr = "GPIB0::{0:d}::INSTR".format(gpib)
 
-        if default is None:
-            #gpib address given
-            if gpib is not None:
-                if gwip is not None:
-                    visastr = "TCPIP::{0:s}::gpib0,{1:d}::INSTR".format(gwip, gpib)
-                else:
-                    visastr = "GPIB0::{0:d}::INSTR".format(gpib)
+        #ip address given
+        if ip is not None:
+            visastr = "TCPIP::{0:s}::INSTR".format(ip)
 
-            #ip address given
-            if ip is not None:
-                visastr = "TCPIP::{0:s}::INSTR".format(ip)
-        
-        else:
-            visastr = default
 
         if visastr is None:
-            print("No VISA string given!")
+            visastr = self.default_VISA()
 
         self.resource = instrument.rm.open_resource(visastr)
         self.visastr  = visastr
