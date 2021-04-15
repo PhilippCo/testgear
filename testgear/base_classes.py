@@ -16,19 +16,33 @@ class instrument:
             instrument.rm = pyvisa.ResourceManager('@py')
             print("pyvisa initialized..")
 
-        #gpib address given
-        if gpib is not None:
-            if gwip is not None:
-                visastr = "TCPIP::{0:s}::gpib0,{1:d}::INSTR".format(gwip, gpib)
-            else:
-                visastr = "GPIB0::{0:d}::INSTR".format(gpib)
+        default = self.default_VISA()
 
-        #ip address given
-        if ip is not None:
-            visastr = "TCPIP::{0:s}::INSTR".format(ip)
+        if default is None:
+            #gpib address given
+            if gpib is not None:
+                if gwip is not None:
+                    visastr = "TCPIP::{0:s}::gpib0,{1:d}::INSTR".format(gwip, gpib)
+                else:
+                    visastr = "GPIB0::{0:d}::INSTR".format(gpib)
+
+            #ip address given
+            if ip is not None:
+                visastr = "TCPIP::{0:s}::INSTR".format(ip)
+        
+        else:
+            visastr = default
+
+        if visastr is None:
+            print("No VISA string given!")
 
         self.resource = instrument.rm.open_resource(visastr)
+        self.visastr  = visastr
         self.init() #call function to initialize instrument
+
+    def default_VISA(self):
+        """overload this method to define a default VISA string"""
+        return None
 
     def set_timeout(self, timeout):
         """set instrument timeout in seconds"""

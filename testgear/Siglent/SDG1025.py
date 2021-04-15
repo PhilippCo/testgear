@@ -22,6 +22,10 @@ class SDG1025(base.source):
         self.write("*RST")
 
 
+    def default_VISA(self):
+        return 'TCPIP::192.168.2.87::sdg1025::INSTR'
+
+
     def set_output(self, voltage=None, current=None, enabled=True, frequency=None, resistance=None, channel=1):
         if enabled:
             self.write("C{0:d}:OUTP ON".format(channel))
