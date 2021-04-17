@@ -1,4 +1,5 @@
 """import submodules"""
+import testgear.CoTech as CoTech
 import testgear.Fluke as Fluke
 import testgear.HPAK as HPAK # HP / Agilent / Keysight
 import testgear.Keithley as Keithley
