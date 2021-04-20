@@ -78,7 +78,7 @@ class A34970A(base.meter):
         self.write("ROUT:SCAN (@)")
         
 
-    def conf_function_DCV(self, mrange=None, nplc=20, AutoZero=True, HiZ=True, channel=101):
+    def conf_function_DCV(self, channel=101, mrange=None, nplc=20, AutoZero=True, HiZ=True):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         slist = self.get_scanlist()
         slist.add(channel)
@@ -92,13 +92,20 @@ class A34970A(base.meter):
 
         self.write("VOLT:DC:NPLC {0:0.3f},(@{1:d})".format(nplc, channel))
         
-        #AutoZero
-        #HiZ
-
+        if AutoZero:
+            self.write("ZERO:AUTO ON,(@{0:d})".format(channel))
+        else:
+            self.write("ZERO:AUTO OFF,(@{0:d})".format(channel))
+        
+        if HiZ:
+            self.write("INPUT:IMPEDANCE:AUTO ON,(@{0:d})".format(channel))
+        else:
+            self.write("INPUT:IMPEDANCE:AUTO OFF,(@{0:d})".format(channel))
+        
         self.set_scanlist(slist)
 
 
-    def conf_function_Pt100(self, mrange=None, nplc=20, fourWire=True, R0=100, channel=101):
+    def conf_function_Pt100(self, nplc=20, fourWire=True, R0=100, channel=101):
         pass
 
 
