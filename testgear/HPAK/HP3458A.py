@@ -48,49 +48,49 @@ class HP3458A(base.meter):
             self.write("FIXEDZ ON")
 
   
-    def conf_function_DCV(self, range=None, nplc=100, AutoZero=True, HiZ=True, channel=1):
+    def conf_function_DCV(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.write("DCV")
-        self.__set_range(range, NPLC)
+        self.__set_range(mrange, NPLC)
         self.__autoZero(AutoZero)
         self.__hiZ(HiZ)
 
 
-    def conf_function_DCI(self, range=None, nplc=100, AutoZero=True, HiZ=True, channel=1):
+    def conf_function_DCI(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=1):
         """configures the meter to measure DCI. if range=None the meter is set to Autorange"""
         self.write("DCI")
-        self.__set_range(range, NPLC)
+        self.__set_range(mrange, NPLC)
         self.__autoZero(AutoZero)
         self.__hiZ(HiZ)
 
 
-    def conf_function_ACV(self, range=None, nplc=100, AutoZero=True, HiZ=True, channel=1):
+    def conf_function_ACV(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.write("ACV")
-        self.__set_range(range, NPLC)
+        self.__set_range(mrange, NPLC)
         self.__autoZero(AutoZero)
         self.__hiZ(HiZ)
 
 
-    def conf_function_ACI(self, range=None, nplc=100, AutoZero=True, HiZ=True, channel=1):
+    def conf_function_ACI(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.write("ACI")
-        self.__set_range(range, NPLC)
+        self.__set_range(mrange, NPLC)
         self.__autoZero(AutoZero)
         self.__hiZ(HiZ)
 
 
-    def conf_function_OHM2W(self, range=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=1):
+    def conf_function_OHM2W(self, mrange=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.write("ACV")
-        self.__set_range(range, NPLC)
+        self.__set_range(mrange, NPLC)
         self.__autoZero(AutoZero)
         self.__hiZ(HiZ)
 
 
-    def conf_function_OHM4W(self, range=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=1):
+    def conf_function_OHM4W(self, mrange=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.write("ACV")
-        self.__set_range(range, NPLC)
+        self.__set_range(mrange, NPLC)
         self.__autoZero(AutoZero)
         self.__hiZ(HiZ)

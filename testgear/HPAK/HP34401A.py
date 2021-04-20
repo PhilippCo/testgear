@@ -38,43 +38,43 @@ class HP34401A(base.meter):
             self.write("{0:s}:RANGE {1:0.6f}".format(prefix, range))
         
 
-    def conf_function_DCV(self, range=None, nplc=100, AutoZero=True, HiZ=True, channel=1):
+    def conf_function_DCV(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
-        self.__conf_range("VOLT:DC", range)
+        self.__conf_range("VOLT:DC", mrange)
         self.write("VOLT:DC:NPLC {0:0.3f}".format(nplc))
         self.__autoZero(AutoZero)
         self.__hiZ(HiZ)
 
 
-    def conf_function_DCI(self, range=None, nplc=100, AutoZero=True, HiZ=True, channel=1):
+    def conf_function_DCI(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=1):
         """configures the meter to measure DCI. if range=None the meter is set to Autorange"""
-        self.__conf_range("CURR:DC", range)
+        self.__conf_range("CURR:DC", mrange)
         self.write("CURR:DC:NPLC {0:0.3f}".format(nplc))
         self.__autoZero(AutoZero)
         self.__hiZ(HiZ)
 
 
-    def conf_function_ACV(self, range=None, nplc=None, AutoZero=True, HiZ=True, channel=1):
+    def conf_function_ACV(self, mrange=None, nplc=None, AutoZero=True, HiZ=True, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
-        self.__conf_range("VOLT:AC", range)
+        self.__conf_range("VOLT:AC", mrange)
         self.__autoZero(AutoZero)
         self.__hiZ(HiZ)
 
 
-    def conf_function_ACI(self, range=None, nplc=None, AutoZero=True, HiZ=True, channel=1):
+    def conf_function_ACI(self, mrange=None, nplc=None, AutoZero=True, HiZ=True, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
-        self.__conf_range("CURR:AC", range)
+        self.__conf_range("CURR:AC", mrange)
         self.__autoZero(AutoZero)
         self.__hiZ(HiZ)
 
 
-    def conf_function_OHM2W(self, range=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=1):
+    def conf_function_OHM2W(self, mrange=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
-        self.__conf_range("RES", range)
+        self.__conf_range("RES", mrange)
         self.write("RES:NPLC {0:0.3f}".format(nplc))
         
 
-    def conf_function_OHM4W(self, range=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=1):
+    def conf_function_OHM4W(self, mrange=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
-        self.__conf_range("FRES", range)
+        self.__conf_range("FRES", mrange)
         self.write("FRES:NPLC {0:0.3f}".format(nplc))
