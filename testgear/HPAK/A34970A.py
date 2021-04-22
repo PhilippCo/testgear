@@ -9,6 +9,7 @@ class A34970A(base.meter):
     
 
     def get_reading(self, channel=None):
+        """returns the currently selected monitor reading"""
         if channel in self.get_scanlist():
             if channel is not None:
                 self.set_monitor_channel(channel)
@@ -57,15 +58,16 @@ class A34970A(base.meter):
     def trigger_scan(self):
         self.write("INIT")
 
-    def get_triggered_scan(self):
-        #gleiche Aufbereitung der Antwort wie in get_scan verwenden
-        return self.query("FETCH?")
+    def __scan2dict(self, data):
+        meas  = list(map(float, data.split(",")))
+        slist = self.get_scanlist()
+        return dict(zip(slist, meas))
 
+    def get_triggered_scan(self):
+        return self.__scan2dict(self.query("FETCH?"))
 
     def get_scan(self):
-        #dictionary einbauen
-        return self.query("READ?")
-
+        return self.__scan2dict(self.query("READ?"))
 
     def set_scanlist(self, slist:set):
         strlist = ""
