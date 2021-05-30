@@ -18,7 +18,17 @@ class JS3010(base.source):
 
 
     def set_output(self, voltage=None, current=None, enabled=True, frequency=None, resistance=None, channel=1):
-        """set output"""
+        """
+        configures the output of the Knick JS3010 calibrator
+        voltage sets the output voltage in volt
+        current sets the output current in amps
+        if both are given (voltage and current) the voltage is used
+        
+        enabled enables or disables the calibrator output
+        
+        frequency not supported
+        resistance not supported
+        channel not supported"""
         output = self.get_output()
 
         if voltage is not None:
