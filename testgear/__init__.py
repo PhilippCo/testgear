@@ -9,3 +9,4 @@ import testgear.LakeShore as LakeShore
 import testgear.Rigol as Rigol
 import testgear.Siglent as Siglent
 import testgear.Valhalla as Valhalla
+import testgear.sensor as sensor
