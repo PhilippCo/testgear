@@ -1,5 +1,7 @@
 """Class to convert Pt100 data from resistance to temperature and the other way around"""
 
+#input and output should be a "reading" object. raise error if input isn't in Ohms
+
 class Pt100():
     def __init__(self):
         self.A = 123
