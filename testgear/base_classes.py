@@ -100,6 +100,7 @@ class scope(instrument):
 
 
 class output_status:
+    """represents the output status of a channel"""
     def __init__(self):
         self.channel     = 1
         self.enabled     = False
@@ -114,6 +115,8 @@ class output_status:
         self.waveform    = "DC"
 
         self.resistance  = np.nan
+
+        self.uncertainty = np.nan
 
 
     def __repr__(self):
@@ -133,3 +136,23 @@ class output_status:
         return string
 
    
+class reading:
+    """represents the reading of an instrument
+    
+    value       - value of the reading
+    unit        - physical unit of reading
+
+    uncertainty - uncertainty of the reading based on 1year specification
+
+    channel     - measurement channel of the instrument
+    """
+    def __init__(self, value=np.nan, unit=""):
+        self.channel = 1
+        self.value   = value
+        self.unit    = unit
+
+
+    def __repr__(self):
+        return "{0:0.6f} {1}".format(self.value, self.unit)
+
+    #TODO: implement simple arithmetic to convert units during multiping and division
