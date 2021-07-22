@@ -19,9 +19,9 @@ class LowThermalSwitch(base.instrument):
 
     def short(self):
         '''Short output to the instrument to measure offset'''
-        self.query("0")
+        self.channel(0)
 
     def open(self):
         '''open output to the instrument
         all channels are switched off'''
-        self.query("2")
+        self.channel(2)
