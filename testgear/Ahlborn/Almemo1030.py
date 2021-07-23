@@ -14,5 +14,4 @@ class Almemo1030(base.source):
         data = self.resource.read_raw()
         self.resource.read_raw()
 
-        data = self.query("p")
         return float(str(data)[6:-10])
