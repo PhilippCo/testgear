@@ -4,6 +4,12 @@ import testgear.base_classes as base
 import numpy as np
 
 class A34970A(base.meter):
+    def init(self):
+        pass
+
+    def default_VISA(self):
+        return 'TCPIP::192.168.2.88::gpib0,9::INSTR'
+
     def reset(self):
         self.write("*RST")
     
