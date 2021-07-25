@@ -9,11 +9,12 @@ class HP3488A(base.instrument):
             cardtype = self.query("CTYPE {0:d}".format(slot)).strip()
             self.cards.append(cardtype)
 
+    def default_VISA(self):
+        return 'TCPIP::192.168.2.88::gpib0,10::INSTR'
 
     def get_errors(self):
         """read errors"""
         return self.query("ERROR")
-
 
     def get_modules(self):
         # 44470 Relay Mux
