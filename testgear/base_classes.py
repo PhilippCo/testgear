@@ -11,6 +11,8 @@ class instrument:
     def __init__(self, visastr=None, gpib=None, gwip=None, ip=None):
         """open VISA instrument"""
 
+        self.idstr = ""
+
         #create pyvisa instance if needed
         if instrument.rm == None:
             instrument.rm = pyvisa.ResourceManager('@py')
@@ -46,6 +48,7 @@ class instrument:
         string = "============ Testgear Instrument ============\n"
         string += "Class:\t\t{}\n".format(type(self).__name__)
         string += "VISA String:\t{}\n".format(self.visastr)
+        string += "ID String:\t{}\n".format(self.idstr)
         string += "Timeout:\t{0:0.3f} s\n".format(self.resource.timeout/1000)
 
         return string
