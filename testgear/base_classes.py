@@ -8,7 +8,7 @@ class instrument:
 
     rm = None #Class variable for pyvisa resource manager
 
-    def __init__(self, visastr=None, gpib=None, gwip="192.168.2.88", ip=None):
+    def __init__(self, visastr=None, gpib=None, gwip=None, ip=None):
         """open VISA instrument"""
 
         #create pyvisa instance if needed
@@ -30,6 +30,9 @@ class instrument:
 
         if visastr is None:
             visastr = self.default_VISA()
+
+        if visastr is None: #check if VISA string is still None
+            raise ValueError('Instrument Interface not defined!')
 
         self.resource = instrument.rm.open_resource(visastr)
         self.visastr  = visastr
