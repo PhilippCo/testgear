@@ -45,7 +45,7 @@ class HP3488A(base.instrument):
         self.write("CHAN {0:d}{1:02d}".format(modul_idx, channel))
 
 
-    def set_relay(self, modul_idx, channel, state):
+    def set_relay(self, modul_idx, channel, state=True):
         """switch relay ON or OFF"""
         if state:
             self.write("CLOSE {0:d}{1:02d}".format(modul_idx, channel))
