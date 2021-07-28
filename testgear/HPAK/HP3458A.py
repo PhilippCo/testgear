@@ -12,6 +12,8 @@ class HP3458A(base.meter):
 
         self.set_timeout(30)
 
+        self.idstr = self.query("ID?").strip()
+
 
     def default_VISA(self):
         return 'TCPIP::192.168.2.88::gpib0,22::INSTR'
