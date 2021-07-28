@@ -23,7 +23,7 @@ class HP3488A(base.instrument):
         # 44473 Matrix Switch
         # 44474 Digital IO
         # 44475 Breadboard - not supported
-        return self.cards
+        return dict(enumerate(self.cards, start=1))
     
 
     def is_module(self, modul_idx, type):
