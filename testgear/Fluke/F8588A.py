@@ -4,7 +4,7 @@ import testgear.base_classes as base
 
 class F8588A(base.source):
     def init(self):
-        pass
+        self.idstr = self.query("*IDN?").strip()
 
 
     def get_reading(self):
