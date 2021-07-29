@@ -7,6 +7,7 @@ class HP53131A(base.meter):
 
 
     def get_reading(self, channel=None):
+        """get frequency reading"""
         if channel == 1:
             self.write(':SENSe:FUNCtion "FREQUENCY 1"')
         elif channel == 2:
@@ -33,3 +34,15 @@ class HP53131A(base.meter):
 
 
 
+# counting
+
+# initialize
+# HP53131.write("*RST")
+# HP53131.write(":CONF:TOTalize:CONT")
+
+# start counting
+# HP53131.write(":INITiate")
+
+# one have to Abort the counting before one can fetch the data
+# HP53131.write(":Abort")
+# count = float(HP53131.query(":FETCH?"))
