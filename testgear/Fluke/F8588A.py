@@ -37,12 +37,20 @@ class F8588A(base.source):
 
 
     def conf_function_OHM4W(self, mrange=None, nplc=200, AutoZero=True, OffsetCompensation=True, channel=1):
-        """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
+        """configures the meter to measure 4w resistance. if range=None the meter is set to Autorange"""
+        self.__select_chanel(channel)
         self.write(':SENS:FUNC "FRES"') #select 4w ohms
         self.write(":SENSE:FRES:RANGE 1") #1 Ohm Range
         self.write(":SENSE:FRES:NPLC 200") #200NPLC
         self.write(":SENSE:FRES:MODE TRUE") #True Ohms
         self.write(":SENSE:FRES:RES 8") #8.5 digits
+
+
+    def __select_channel(self, channel):
+        if channel == 1:
+            self.select_terminal("REAR")
+        else:
+            self.select_terminal("FRONT")
 
 
     def select_terminal(self, terminal="FRONT"):
