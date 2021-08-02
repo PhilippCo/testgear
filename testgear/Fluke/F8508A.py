@@ -2,7 +2,7 @@
 
 import testgear.base_classes as base
 
-class F8508A(base.source):
+class F8508A(base.meter):
     def init(self):
         pass
 

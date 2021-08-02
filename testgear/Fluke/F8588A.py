@@ -2,7 +2,7 @@
 
 import testgear.base_classes as base
 
-class F8588A(base.source):
+class F8588A(base.meter):
     def init(self):
         self.idstr = self.query("*IDN?").strip()
 
