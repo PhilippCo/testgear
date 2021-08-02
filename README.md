@@ -18,19 +18,19 @@ Configures the instrument to measure DC volts
 
 
 ```python
-conf_function_ACV(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=1)
+conf_function_ACV(mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=1)
 ```
 
 ```python
-conf_function_DCI(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=1)
+conf_function_DCI(mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=1)
 ```
 
 ```python
-conf_function_ACI(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=1)
+conf_function_ACI(mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=1)
 ```
 
 ```python
-conf_function_OHM2W(self, mrange=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=1)
+conf_function_OHM2W(mrange=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=1)
 ```
 Configures the instrument to measure OHMs with 2 wires
 * OffsetCompensation: enables the offset compensation feature of the meter
