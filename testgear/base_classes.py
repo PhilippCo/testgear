@@ -85,7 +85,7 @@ class instrument:
 
     def __del__(self):
         self.close() #close instrument
-        print("base class destroyed")
+        print("Class {} destroyed".format(type(self).__name__))
 
 
 
