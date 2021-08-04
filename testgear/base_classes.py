@@ -74,9 +74,18 @@ class instrument:
         """query instrument"""
         return self.resource.query(cmd)
 
+    def cleanup(self):
+        """overload this function to return the instrument to LOCAL"""
+        pass
+
     def close(self):
         """close resource"""
+        self.cleanup()
         self.resource.close()
+
+    def __del__(self):
+        self.close() #close instrument
+        print("base class destroyed")
 
 
 
