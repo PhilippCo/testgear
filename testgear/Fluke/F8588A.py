@@ -47,7 +47,7 @@ class F8588A(base.meter):
 
 
     def __select_channel(self, channel):
-        if channel == 1:
+        if channel == 2:
             self.select_terminal("REAR")
         else:
             self.select_terminal("FRONT")
