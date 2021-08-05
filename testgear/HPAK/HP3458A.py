@@ -117,12 +117,34 @@ class HP3458A(base.meter):
         self.__autoZero(AutoZero)
 
 
-    def __unpack(self, arr):
-        return struct.unpack(">h", arr)[0]
+    def read_samples(self, samplewidth=2, samples=2):
+        #read samples in SINT (samplewidth=2) or DINT (samplewidth=4) format
+        data   = self.resource.read_bytes(samplewidth*samples)
+        chunks = [data[i:i+samplewidth] for i in range(0, len(data), samplewidth)]
+
+        if samplewidth == 2:
+            fstr = ">h"
+        elif samplewidth == 4:
+            fstr = ">i"
+        else:
+            print("format not supported!")
+
+        unpacked = map(lambda a:struct.unpack(fstr, a)[0], chunks)
+        
+        arr  = np.fromiter(unpacked, float, count=samples)
+        gain = float(self.query("ISCALE?"))
+        return arr * gain
 
 
     def digitize(self, mrange=10, samples=512, srate=20e-6, aperture=3e-6, delay=0):
-        if srate < 20e-6:
+        #DCV digitizing
+        #higher trigger jitter, but less noise
+        #it doesn't use the sample&hold
+        #bandwidth limited to 150kHz
+        #max. sample rate 10µs (100kS/s)
+        #Aperture 
+
+        if srate < 10e-6:
             print("Sample rate too high for digitzing, use subsampling!")
             return np.array([]), np.array([])
 
@@ -146,14 +168,35 @@ class HP3458A(base.meter):
 
         self.write("TARM SYN")
 
-        data = self.resource.read_bytes(2*samples) #für SINT
-        info = [data[i:i+2] for i in range(0, len(data), 2)]
-        arr  = np.array(list(map(self.__unpack, info)))
-        gain = float(self.query("ISCALE?"))
-
         t = np.linspace(delay, samples*srate+delay, num=samples)
-        return t, arr * gain
+        return t, self.read_samples(samplewidth=2, samples=samples)
 
 
-    def subsampling(self):
+    def directsampling(self):
+        #uses sample&hold
+        #12MHz Bandwidth path
+        #max 50kS/s
+        #Aperture fixed 2ns (sample&hold)
         pass
+
+
+    def subsampling(self, mrange=10, samples=500, srate=10e-9, delay=500e-9):
+        #uses sample&hold
+        #12MHz Bandwidth path
+        #equivalent 100MS/s
+        #Aperture fixed 2ns (sample&hold)
+
+        self.write("PRESET FAST")#TARM SYN, TRIG AUTO, DINT FORMATS
+        self.write("MEM FIFO")#ENABLE READING MEMORY, FIFO MODE
+        self.write("MFORMAT SINT")#SINT READING MEMORY FORMAT
+        self.write("OFORMAT SINT")
+        self.write("SSDC 10")#SUB-SAMPLING, 10 V RANGE, LEVEL SYNC SOURCE EVENT (DEFAULT EVENT)
+        self.write("SWEEP 10E-9,500")#4000 SAMPLES, 10 ns EFFECTIVE INTERVAL
+        self.write("DELAY 500E-9")
+        self.write("LEVEL 10 DC")#LEVEL TRIGGER AT 10% OF RANGE, DC-COUPLED
+        self.write("SLOPE POS")#LEVEL TRIGGER ON POSITIVE SLOPE
+        self.write("SSRC LEVEL")#LEVEL SYNC SOURCE EVENT
+        self.write("TARM SGL")#ENABLE SAMPLING
+        
+        t = np.linspace(delay, samples*srate+delay, num=samples)
+        return t, self.read_samples(samplewidth=2, samples=samples)
