@@ -17,6 +17,7 @@ class HP3458A(base.meter):
 
         self.set_timeout(30)
 
+
     def cleanup(self):
         self.write("TRIG AUTO")
 
@@ -104,22 +105,24 @@ class HP3458A(base.meter):
 
     def conf_function_OHM2W(self, mrange=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
+        #TODO: Offsetcompensation
         self.write("PRESET NORM")
-        self.write("ACV")
+        self.write("OHM")
         self.__set_range(mrange, nplc)
         self.__autoZero(AutoZero)
 
 
     def conf_function_OHM4W(self, mrange=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
+        #TODO: Offsetcompensation
         self.write("PRESET NORM")
-        self.write("ACV")
+        self.write("OHMF")
         self.__set_range(mrange, nplc)
         self.__autoZero(AutoZero)
 
 
     def read_samples(self, samplewidth=2, samples=2):
-        #read samples in SINT (samplewidth=2) or DINT (samplewidth=4) format
+        """read samples in SINT (samplewidth=2) or DINT (samplewidth=4) format"""
         data   = self.resource.read_bytes(samplewidth*samples)
         chunks = [data[i:i+samplewidth] for i in range(0, len(data), samplewidth)]
 
@@ -178,7 +181,7 @@ class HP3458A(base.meter):
         #12MHz Bandwidth path
         #max 50kS/s
         #Aperture fixed 2ns (sample&hold)
-        pass
+        return np.array([]), np.array([])
 
 
     def subsampling(self, mrange=10, samples=500, srate=10e-9, delay=500e-9):
