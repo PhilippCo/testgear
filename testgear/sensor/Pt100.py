@@ -7,9 +7,10 @@ import numpy as np
 
 class Pt100():
     def __init__(self):
-        self.__A = 3.90802 * 1e-3
-        self.__B = -5.802 * 1e-7
-        self.__C = -4.2735 * 1e-12
+        self.__A = 3.9083 * 1e-3
+        self.__B = -5.775 * 1e-7
+        self.__C = -4.183 * 1e-12
+
 
     def __R2temp(self, res, R0=100):
         A = self.__A
