@@ -87,6 +87,7 @@ class HP3458A(base.meter):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.write("PRESET NORM")
         self.write("ACV")
+        self.write("SETACV SYNC")
         self.__set_range(mrange, nplc)
         self.__autoZero(AutoZero)
         self.__hiZ(HiZ)
