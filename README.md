@@ -52,3 +52,73 @@ Configures the instrument to measure OHMs with 4 wires
 ```python
 set_output(voltage=None, current=None, enabled=True, resistance=None, frequency=None, channel=1)
 ```
+
+
+# supported instruments
+
+## Multimeter, Electrometer
+
+### HP, Agilent & Keysight
+- HP 3458A
+- HP 34401A
+- HP 34970A (HP 34972A)
+- Keysight 34461A (34460A should work as well)
+- Keysight 34470A (34465A should work as well)
+
+### Keithley
+- Keithley 182
+- Keithley 617
+
+### Fluke
+- Fluke 8508A
+- Fluke 8588A
+
+## Frequency Counter
+
+### HP, Agilent & Keysight
+- HP53131A (HP53132A works as well)
+
+## Power Supplies
+
+### HP, Agilent & Keysight
+- Agilent 6632B
+- HP 603xA
+
+### Korad
+- KA3005P
+
+# Calibrator
+
+### Fluke
+- Fluke 5730A (57XX should work, but untested)
+- Fluke 5450A
+- Fluke 5440B
+
+### Knick
+- Knick JS3010
+
+### Valhalla
+- Valhalla 2703
+
+# Multiplexer, Switches
+
+### Cotech
+- Cotech DIY Low Thermal Switch
+
+### HP, Agilent & Keysight
+- HP 3488A
+
+# Function Generator
+
+## Siglent
+- Siglent SDG1025
+
+# Scopes
+
+# Temperature Controller/Meter
+
+## Ahlborn
+- Almemo 1030
+
+## LakeShore
+- LakeShore 331
