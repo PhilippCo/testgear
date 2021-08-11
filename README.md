@@ -52,3 +52,36 @@ Configures the instrument to measure OHMs with 4 wires
 ```python
 set_output(voltage=None, current=None, enabled=True, resistance=None, frequency=None, channel=1)
 ```
+
+
+# supported instruments
+
+## Multimeter, Electrometer
+
+### HP, Agilent & Keysight
+- HP 3458A
+- HP 34401A
+- HP 34970A (HP 34972A)
+- Keysight 34461A (34460A should work as well)
+- Keysight 34470A (34465A should work as well)
+
+### Keithley
+- Keithley 182
+- Keithley 617
+
+### Fluke
+- Fluke 8508A
+- Fluke 8588A
+
+## Frequency Counter
+
+### HP, Agilent & Keysight
+- HP53131A (HP53132A works as well)
+
+## Power Supplies
+
+### HP, Agilent & Keysight
+- Agilent 6632B
+
+### Korad
+- 3055?
