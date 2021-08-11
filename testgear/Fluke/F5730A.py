@@ -28,6 +28,11 @@ class F5730A(base.source):
                 value = resistance
                 frequency = 0
 
+            if fourWire:
+                self.write("EXTSENSE ON")
+            else:
+                self.write("EXTSENSE OFF")
+
             self.write("OUT {0:0.6g}{1}, {2:0.6g}Hz;*CLS;OPER".format(value, unit, frequency))
 
         else: #not enabled
