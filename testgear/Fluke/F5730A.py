@@ -1,10 +1,12 @@
 """Fluke 5730A Multifunction Calibrator"""
 
 import testgear.base_classes as base
+import numpy as np
 
 class F5730A(base.source):
 
     def init(self):
+        self.set_timeout(10)
         self.idstr = self.query("*IDN?").strip()
 
         idstring = self.idstr.split(",")
@@ -37,12 +39,85 @@ class F5730A(base.source):
 
         else: #not enabled
             self.write("STBY")
+        
+        self.query("*OPC?") #wait for settling
 
     
+    def get_cal_status(self):
+        # CAL_DAYS? Returns the number of days elapsed since the last calibration activity of the specified type
+        # CAL_INTV? Returns the calibration interval for main output calibration
+        # ONTIME? Returns the time in minutes since the Calibrator was turned on
+        return 0
+
+
+    def set_time(self):
+        '''sets the clock of the calibrator'''
+        pass
+
+
+    def guard(self, state):
+        """Guard configuration:
+            True -> Guard connected to LO
+            False -> Guard disconnected from LO
+        """
+        if state:
+            self.write("EXTGUARD OFF")
+        else:
+            self.write("EXTGUARD ON")
+
+
+    def lock_range(self, state=False):
+        """Locks the present output range"""
+        if state:
+            self.write("RANGELCK ON")
+        else:
+            self.write("RANGELCK OFF")
+
+
     def get_output(self):
         """return an object which reflects the output conditions"""
         obj = base.output_status()
 
-        #add uncertainty absolute and in ppm
+        # CAL_CONF?  Returns the current calibration confidence level
+        
+
+        #read adjusted value
+        output = self.query("ADJOUT?").split(",")
+        # example 1.883E-01,A,4.42E+02
+
+        #read actual setpoint
+        aset = self.query("OUT?").split(",")
+
+        #read uncertainty
+        unc = self.query("UNCERT?").split(",")
+        obj.uncertainty = float(unc[0])
+
+        if output[1] == "V":
+            obj.set_voltage = float(aset[0])
+            obj.voltage     = float(output[0])
+            obj.frequency   = float(output[2])
+
+        elif output[1] == "A":
+            obj.set_current = float(aset[0])
+            obj.current     = float(output[0])
+            obj.frequency   = float(output[2])
+
+        elif output[1] == "OHM":
+            obj.resistance = float(output[0])
+            obj.frequency  = 0
+
+        else:
+            print("no match!")
+
+
+        if obj.frequency > 0:
+            obj.waveform = "SINE"
+        else:
+            obj.waveform = "DC"
 
         return obj
+
+
+    def cleanup(self):
+        pass
+        #self.write("LOCAL")
