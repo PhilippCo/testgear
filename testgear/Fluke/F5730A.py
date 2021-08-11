@@ -5,17 +5,30 @@ import testgear.base_classes as base
 class F5730A(base.source):
 
     def init(self):
-        idstring = self.query("*IDN?").split(",")
+        self.idstr = self.query("*IDN?").strip()
+
+        idstring = self.idstr.split(",")
         if idstring[0] == "FLUKE" and idstring[1] == "5730A":
             print("Fluke 5730A calibrator detected")
         else:
             print("no Fluke 5730A detected!") #raise error?
         
 
-    def set_output(self, voltage=None, current=None, enabled=True, frequency=None, resistance=None, channel=1):
+    def set_output(self, voltage=None, current=None, enabled=True, frequency=0, resistance=None, fourWire=False, channel=1):
         if enabled:
-            # write("OUT 10V, 0Hz;*CLS;OPER")
-            pass
+
+            if voltage is not None:
+                unit  = "V"
+                value = voltage
+            elif current is not None:
+                unit  = "A"
+                value = current
+            elif resistance is not None:
+                unit  = "OHM"
+                value = resistance
+                frequency = 0
+
+            self.write("OUT {0:0.6g}{1}, {2:0.6g}Hz;*CLS;OPER".format(value, unit, frequency))
 
         else: #not enabled
             self.write("STBY")
