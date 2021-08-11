@@ -82,6 +82,43 @@ set_output(voltage=None, current=None, enabled=True, resistance=None, frequency=
 
 ### HP, Agilent & Keysight
 - Agilent 6632B
+- HP 603xA
 
 ### Korad
-- 3055?
+- KA3005P
+
+# Calibrator
+
+### Fluke
+- Fluke 5730A (57XX should work, but untested)
+- Fluke 5450A
+- Fluke 5440B
+
+### Knick
+- Knick JS3010
+
+### Valhalla
+- Valhalla 2703
+
+# Multiplexer, Switches
+
+### Cotech
+- Cotech DIY Low Thermal Switch
+
+### HP, Agilent & Keysight
+- HP 3488A
+
+# Function Generator
+
+## Siglent
+- Siglent SDG1025
+
+# Scopes
+
+# Temperature Controller/Meter
+
+## Ahlborn
+- Almemo 1030
+
+## LakeShore
+- LakeShore 331
