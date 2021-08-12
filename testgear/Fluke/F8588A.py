@@ -16,39 +16,39 @@ class F8588A(base.meter):
     def conf_function_DCV(self, mrange=1000, nplc=200, AutoZero=True, HiZ=True, channel=None):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.__select_channel(channel)
-        self.__conf_range("VOLT:DC", mrange)
+        self.__conf_range("VOLT:DC", mrange, nplc)
         #:IMPedance AUTO|1M|10M
-        self.write(":SENSE:VOLT:DC:NPLC {0:0d}".format(nplc))
 
 
     def conf_function_DCI(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=None):
         """configures the meter to measure DCI. if range=None the meter is set to Autorange"""
-        self.__conf_range("CURR:DC", mrange)
+        self.__select_channel(channel)
+        self.__conf_range("VOLT:AC", mrange, nplc)
 
 
     def conf_function_ACV(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=None):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
-        self.__conf_range("VOLT:AC", mrange)
+        self.__select_channel(channel)
+        self.__conf_range("VOLT:AC", mrange, nplc)
 
 
     def conf_function_ACI(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=None):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
-        self.__conf_range("CURR:AC", mrange)
+        self.__select_channel(channel)
+        self.__conf_range("CURR:AC", mrange, nplc)
   
 
     def conf_function_OHM2W(self, mrange=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=None):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.__select_channel(channel)
-        self.__conf_range("RES", mrange)
-        self.write(":SENSE:FRES:NPLC 200") #200NPLC
-        self.write(":SENSE:FRES:MODE TRUE") #True Ohms
+        self.__conf_range("RES", mrange, nplc)
+        #self.write(":SENSE:FRES:MODE TRUE") #True Ohms
 
 
     def conf_function_OHM4W(self, mrange=None, nplc=200, AutoZero=True, OffsetCompensation=True, channel=1):
         """configures the meter to measure 4w resistance. if range=None the meter is set to Autorange"""
         self.__select_channel(channel)
         self.__conf_range("FRES", mrange)
-        self.write(":SENSE:FRES:NPLC 200") #200NPLC
         self.write(":SENSE:FRES:MODE TRUE") #True Ohms
 
 
@@ -68,7 +68,7 @@ class F8588A(base.meter):
         self.write(":ROUTe:Terminals {0}".format(terminal))
 
 
-    def __conf_range(self, prefix:str, mrange):
+    def __conf_range(self, prefix:str, mrange, nplc):
         self.write(':SENS:FUNC "{0:s}"'.format(prefix))
         self.write(":SENSE:{0:s}:RES 8".format(prefix))
         
@@ -76,5 +76,11 @@ class F8588A(base.meter):
             self.write(":SENS:{0:s}:RANGE:AUTO ON".format(prefix))
         else:
             self.write(":SENSE:{0:s}:RANGE {1:0.6g}".format(prefix, mrange))
+
+        self.__set_nplc(prefix, nplc)
+
+
+    def __set_nplc(self, prefix:str, nplc):
+        self.write(":SENSE:{0:s}:NPLC {1:d}".format(prefix, nplc))
 
 #inst.query(":SENSE:FRES:RANGE?")
