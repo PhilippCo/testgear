@@ -8,7 +8,8 @@ class F8588A(base.meter):
         self.set_timeout(30)
 
 
-    def get_reading(self):
+    def get_reading(self, channel=None):
+        self.__select_channel(channel)
         return float(self.query("READ?"))
 
 
