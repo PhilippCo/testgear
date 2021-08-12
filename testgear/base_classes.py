@@ -90,7 +90,14 @@ class instrument:
 
 
 class source(instrument):
-    pass
+    def set_output(self, voltage=None, current=None, enabled=True, frequency=0, resistance=None, fourWire=False, channel=1):
+        #every source should have a set_output method
+        pass
+
+    def get_output(self):
+        #every source should habe a get_output method
+        obj = output_status()
+        return obj
 
 
 class meter(instrument):
@@ -98,12 +105,12 @@ class meter(instrument):
         readings = []
         for _ in range(0, averages):
             readings.append(self.get_reading(channel=channel))
-        return np.mean(readings), np.std(readings)
+        
+        return { "mean"    : np.mean(readings), 
+                 "std"     : np.std(readings), 
+                 "std_ppm" : np.std(readings)/np.mean(readings) * 1e6
+               }
 
-
-    def set_range(self, value=0, autorange=False):
-        """sets the correct range for the given value"""
-        pass
 
     def get_reading(self, channel=None):
         """returns the actual value"""
