@@ -23,7 +23,7 @@ class F5450A(base.source):
             self.write("EXT GUARD ON;")
 
 
-    def set_output(self, resistance=None, voltage=None, current=None, enabled=True, frequency=None, channel=1):
+    def set_output(self, resistance=None, voltage=None, current=None, enabled=True, frequency=None, fourWire=False, channel=1):
         if not enabled:
             self.write("OPEN;")
         else:    
