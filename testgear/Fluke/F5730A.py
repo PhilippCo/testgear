@@ -6,7 +6,7 @@ import numpy as np
 class F5730A(base.source):
 
     def init(self):
-        self.set_timeout(10)
+        self.set_timeout(20)
         self.idstr = self.query("*IDN?").strip()
 
         idstring = self.idstr.split(",")
@@ -40,7 +40,15 @@ class F5730A(base.source):
         else: #not enabled
             self.write("STBY")
         
-        self.query("*OPC?") #wait for settling
+        self.__wait_for_settling()
+
+
+    def __wait_for_settling(self):
+        settled = False
+        while not settled:
+            isr = int(self.query("ISR?"))
+            #print(isr)
+            settled = bool(isr & 2**12) #Check for SETTLED Bit
 
     
     def get_cal_status(self):
@@ -80,16 +88,15 @@ class F5730A(base.source):
 
         # CAL_CONF?  Returns the current calibration confidence level
         
+        isr = int(self.query("ISR?")) # Calibrator status register
+        obj.enabled = bool(isr & 0b1)
 
-        #read adjusted value
-        output = self.query("ADJOUT?").split(",")
+        output = self.query("ADJOUT?").split(",") #read adjusted value
         # example 1.883E-01,A,4.42E+02
 
-        #read actual setpoint
-        aset = self.query("OUT?").split(",")
+        aset = self.query("OUT?").split(",") #read actual setpoint
 
-        #read uncertainty
-        unc = self.query("UNCERT?").split(",")
+        unc = self.query("UNCERT?").split(",") #read uncertainty
         obj.uncertainty = float(unc[0])
 
         if output[1] == "V":
