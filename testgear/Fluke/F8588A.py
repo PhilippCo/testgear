@@ -23,7 +23,7 @@ class F8588A(base.meter):
     def conf_function_DCI(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=None):
         """configures the meter to measure DCI. if range=None the meter is set to Autorange"""
         self.__select_channel(channel)
-        self.__conf_range("VOLT:AC", mrange, nplc)
+        self.__conf_range("CURR:DC", mrange, nplc)
 
 
     def conf_function_ACV(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=None):
