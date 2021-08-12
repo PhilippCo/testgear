@@ -6,7 +6,7 @@ import numpy as np
 class F5730A(base.source):
 
     def init(self):
-        self.set_timeout(20)
+        self.set_timeout(10)
         self.idstr = self.query("*IDN?").strip()
 
         idstring = self.idstr.split(",")
@@ -29,6 +29,9 @@ class F5730A(base.source):
                 unit  = "OHM"
                 value = resistance
                 frequency = 0
+                if resistance > 25e6 and fourWire:
+                    fourWire = False
+                    print("4W isn't available for 100Meg")
 
             if fourWire:
                 self.write("EXTSENSE ON")
