@@ -3,6 +3,7 @@ import testgear.base_classes as base
 
 class HP53131A(base.meter):
     def init(self):
+        self.write("*RST")
         self.idstr = self.query("*IDN?").strip()
 
 
@@ -14,6 +15,11 @@ class HP53131A(base.meter):
             self.write(':SENSe:FUNCtion "FREQUENCY 2"')
 
         return float(self.query("READ?").strip())
+
+
+    def conf_function_frequency(self, gatetime=1, channel=1):
+        self.write(":SENS:FREQ:ARM:STOP:SOUR TIM")
+        self.write(":SENS:FREQ:ARM:STOP:TIM {0:0.3g}".format(gatetime))
 
 
     def set_gatetime(self, gatetime):
