@@ -18,6 +18,7 @@ class HP53131A(base.meter):
 
 
     def conf_function_frequency(self, gatetime=1, channel=1):
+        self.timeout(gatetime +2)
         self.write(":SENS:FREQ:ARM:STOP:SOUR TIM")
         self.write(":SENS:FREQ:ARM:STOP:TIM {0:0.3g}".format(gatetime))
 
