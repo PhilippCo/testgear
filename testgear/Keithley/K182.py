@@ -9,20 +9,23 @@ class K182(base.meter):
         self.write("P0X") #digital Filters off   needed?
         self.write("O0X") #analog Filters off   needed?
         self.write("N0X") #all Filters off
-        self.write("S2X") #100ms integration time
+        self.write("S2X") #100ms integration time -> NPLC 5
 
 
-    def set_function(self, function="VDC", range=None, autorange=True):
-        if autorange:
+    def conf_function_DCV(self, mrange=1000, nplc=5, AutoZero=True, HiZ=True, channel=None):
+        """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
+
+        #NLPC is fixed to 5
+        if mrange is None:
             self.write("R0X")
         else:
-            if range <= 3e-3:
+            if mrange <= 3e-3:
                 self.write("R1X") #set 3mV range
-            elif range <= 30e-3:
+            elif mrange <= 30e-3:
                 self.write("R2X") #set 30mV Range
-            elif range <= 300e-3:
+            elif mrange <= 300e-3:
                 self.write("R3X") #set 300mV Range
-            elif range <= 3:
+            elif mrange <= 3:
                 self.write("R4X") #set 3V Range
             else:
                 self.write("R5X") #set 30V Range

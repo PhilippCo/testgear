@@ -38,6 +38,18 @@ class HP34401A(base.meter):
         else:
             self.write("{0:s}:RANGE {1:0.6f}".format(prefix, range))
         
+        #  FUNCtion "FREQuency"
+        #  FUNCtion "PERiod"
+        #  FUNCtion "CONTinuity"
+        #  FUNCtion "DIODe"
+        #  FUNCtion "VOLTage:DC:RATio"
+
+        # use aperture as gatetime
+        # FREQuency:APERture {0.01|0.1|1|MINimum|MAXimum}
+        # Select the aperture time (or gate time) for frequency measurements (the default
+        # is 0.1 seconds). Specify 10 ms (41⁄2 digits), 100 ms (default; 51⁄2 digits), or
+        # 1 second (61⁄2 digits). MIN = 0.01 seconds. MAX = 1 second.
+
 
     def conf_function_DCV(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
