@@ -88,6 +88,7 @@ class instrument:
         """query instrument"""
         return self.resource.query(cmd)
 
+
     def cleanup(self):
         """overload this function to return the instrument to LOCAL"""
         pass
@@ -162,6 +163,45 @@ class meter(instrument):
         """configures the meter to measure 4w resistance. if range=None the meter is set to Autorange"""
         self.__not_supported()
 
+
+    def conf_function_frequency(self, gatetime=1, channel=1):
+        self.__not_supported()
+
+
+    def conf_function_count(self):
+        self.__not_supported()
+
+
+    def conf_function_period(self):
+        self.__not_supported()
+
+    #  HP 34401A
+    #  FUNCtion "CONTinuity"
+    #  FUNCtion "DIODe"
+    #  FUNCtion "VOLTage:DC:RATio"
+
+    #  HP 53131A
+    # The <sensor_function> strings are:
+    #“[:][XNONe:]DCYCle [1]”
+    #or
+    #“[:][XNONe:]PDUTycycle [1]”
+    #“[:][XNONe:]FALL:TIME [1]”
+    #or
+    #“[:][XNONe:]FTIMe [1]”
+    #“[:][XNONe:]FREQuency [1|2|3]”
+    #“[:][XNONe:]FREQuency:RATio [ 1,2 | 1,3 | 2,1 | 3,1 ]”
+    #“[:][XNONe:]NWIDth [1]”
+    #“[:][XNONe:]PERiod [1|2|3]”
+    #“[:][XNONe:]PHASe [1,2]”
+    #“[:][XNONe:]PWIDth [1]”
+    #“[:][XNONe:]TINTerval [1,2]”
+    #“[:][XNONe:]TOTalize [1]”
+    #“[:][XNONe:]RISE:TIME [1]”
+    #or
+    #“[:][XNONe:]RTIMe [1]”
+    #“[:][XNONe:]VOLTage:MAXimum [1|2]”
+    #“[:][XNONe:]VOLTage:MINimum [1|2]”
+    #“[:][XNONe:]VOLTage:PTPeak [1|2]”
 
     def __not_supported(self):
         print("This function is not supported by {}".format(type(self).__name__))
