@@ -40,9 +40,11 @@ class instrument:
         self.visastr  = visastr
         self.init() #call function to initialize instrument
 
+
     def default_VISA(self):
         """overload this method to define a default VISA string"""
         return None
+
 
     def __repr__(self):
         string = "============ Testgear Instrument ============\n"
@@ -54,21 +56,33 @@ class instrument:
         return string
 
 
+    def is_type_of(self, insttype):
+        """Check if class is of a specific type"""
+        if type(self).__name__ == insttype:
+            return True
+        else:
+            return False
+
+
     def set_timeout(self, timeout):
         """set instrument timeout in seconds"""
         self.resource.timeout = int(timeout * 1000)
+
 
     def init(self):
         """overload this method if initialization is needed"""
         pass
 
+
     def write(self, cmd):
         """write command to the instrument"""
         self.resource.write(cmd)
 
+
     def read(self):
         """read from instrument"""
         return self.resource.read()
+
 
     def query(self, cmd):
         """query instrument"""
@@ -78,10 +92,12 @@ class instrument:
         """overload this function to return the instrument to LOCAL"""
         pass
 
+
     def close(self):
         """close resource"""
         self.cleanup()
         self.resource.close()
+
 
     def __del__(self):
         self.close() #close instrument
