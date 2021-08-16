@@ -16,7 +16,7 @@ class instrument:
         #create pyvisa instance if needed
         if instrument.rm == None:
             instrument.rm = pyvisa.ResourceManager('@py')
-            print("pyvisa initialized..")
+            #print("pyvisa initialized..")
 
         #gpib address given
         if gpib is not None:
@@ -102,7 +102,7 @@ class instrument:
 
     def __del__(self):
         self.close() #close instrument
-        print("Class {} destroyed".format(type(self).__name__))
+        #print("Class {} destroyed".format(type(self).__name__))
 
 
 
