@@ -12,3 +12,4 @@ import testgear.Valhalla as Valhalla
 import testgear.sensor as sensor
 import testgear.Ahlborn as Ahlborn
 import testgear.Datron as Datron
+import testgear.Solartron as Solartron
