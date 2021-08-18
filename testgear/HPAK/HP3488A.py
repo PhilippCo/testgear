@@ -4,19 +4,24 @@ import testgear.base_classes as base
 
 class HP3488A(base.instrument):
     def init(self):
-        self.cards = []
+
+        #read installed cards
+        self.cards = {}
         for slot in range(1, 6):
             cardtype = self.query("CTYPE {0:d}".format(slot)).strip()
-            self.cards.append(cardtype)
+            self.cards[slot] = [cardtype[-5:], cardtype[0:-5].strip()]
 
         self.idstr = self.query("ID?").strip()
+
 
     def default_VISA(self):
         return "TCPIP::192.168.2.88::gpib0,10::INSTR"
 
+
     def get_errors(self):
         """read errors"""
         return self.query("ERROR")
+
 
     def get_modules(self):
         # 44470 Relay Mux
@@ -24,13 +29,13 @@ class HP3488A(base.instrument):
         # 44472 VHF Switch
         # 44473 Matrix Switch
         # 44474 Digital IO
-        # 44475 Breadboard - not supported
-        return dict(enumerate(self.cards, start=1))
+        # 44475 Breadboard
+        return self.cards
     
 
     def is_module(self, modul_idx, type):
         """test if the card in slot modul_idx is a card of type type"""
-        return self.cards[modul_idx].split(' ')[-1] == type
+        return self.cards[modul_idx][0] == type
 
 
     def reset_module(self, modul_idx):
@@ -44,7 +49,12 @@ class HP3488A(base.instrument):
 
     def select_channel(self, modul_idx, channel):
         """select multiplexer channel"""
-        self.write("CHAN {0:d}{1:02d}".format(modul_idx, channel))
+        if self.is_module(modul_idx, "44472"):
+            #using CLOSE instead of CHAN for the VHF Switch 
+            #to make use of both channels
+            self.write("CLOSE {0:d}{1:02d}".format(modul_idx, channel))    
+        else:
+            self.write("CHAN {0:d}{1:02d}".format(modul_idx, channel))
 
 
     def set_relay(self, modul_idx, channel, state=True):
