@@ -26,7 +26,7 @@ class HP3458A(base.meter):
         return 'TCPIP::192.168.2.88::gpib0,22::INSTR'
 
 
-    def get_reading(self):
+    def get_reading(self, channel=None):
         self.write("TRG SGL") #Trigger reading
         return float(self.read())
 
@@ -64,6 +64,13 @@ class HP3458A(base.meter):
             self.write("FIXEDZ OFF")
         else:
             self.write("FIXEDZ ON")
+
+    
+    def __ocomp(self, enabled=True):
+        if enabled:
+            self.write("OCOMP ON")
+        else:
+            self.write("OCOMP OFF")
 
   
     def conf_function_DCV(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=1):
@@ -110,6 +117,7 @@ class HP3458A(base.meter):
         self.write("OHM")
         self.__set_range(mrange, nplc)
         self.__autoZero(AutoZero)
+        self.__ocomp(OffsetCompensation)
 
 
     def conf_function_OHM4W(self, mrange=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=1):
@@ -119,6 +127,7 @@ class HP3458A(base.meter):
         self.write("OHMF")
         self.__set_range(mrange, nplc)
         self.__autoZero(AutoZero)
+        self.__ocomp(OffsetCompensation)
 
 
     def read_samples(self, samplewidth=2, samples=2):
