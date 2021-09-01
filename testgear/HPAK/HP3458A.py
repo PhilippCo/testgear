@@ -27,7 +27,7 @@ class HP3458A(base.meter):
 
 
     def get_reading(self, channel=None):
-        self.write("TRG SGL") #Trigger reading
+        self.write("TRIG SGL") #Trigger reading
         return float(self.read())
 
 
