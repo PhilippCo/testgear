@@ -6,8 +6,6 @@ import struct
 class HP3458A(base.meter):
     def init(self):
         self.write("END ALWAYS")
-        self.write("NDIG 8")
-        self.write("TRG SGL")
 
         self.idstr = self.query("ID?").strip()
 
@@ -77,6 +75,8 @@ class HP3458A(base.meter):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.write("PRESET NORM")
         self.write("DCV")
+        self.write("NDIG 8")
+        self.write("TRIG SGL")
         self.__set_range(mrange, nplc)
         self.__autoZero(AutoZero)
         self.__hiZ(HiZ)
@@ -86,6 +86,8 @@ class HP3458A(base.meter):
         """configures the meter to measure DCI. if range=None the meter is set to Autorange"""
         self.write("PRESET NORM")
         self.write("DCI")
+        self.write("NDIG 8")
+        self.write("TRIG SGL")
         self.__set_range(mrange, nplc)
         self.__autoZero(AutoZero)
         self.__hiZ(HiZ)
@@ -96,6 +98,8 @@ class HP3458A(base.meter):
         self.write("PRESET NORM")
         self.write("ACV")
         self.write("SETACV SYNC")
+        self.write("NDIG 8")
+        self.write("TRIG SGL")
         self.__set_range(mrange, nplc)
         self.__autoZero(AutoZero)
         self.__hiZ(HiZ)
@@ -105,6 +109,8 @@ class HP3458A(base.meter):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.write("PRESET NORM")
         self.write("ACI")
+        self.write("NDIG 8")
+        self.write("TRIG SGL")
         self.__set_range(mrange, nplc)
         self.__autoZero(AutoZero)
         self.__hiZ(HiZ)
@@ -115,6 +121,8 @@ class HP3458A(base.meter):
         #TODO: Offsetcompensation
         self.write("PRESET NORM")
         self.write("OHM")
+        self.write("NDIG 8")
+        self.write("TRIG SGL")
         self.__set_range(mrange, nplc)
         self.__autoZero(AutoZero)
         self.__ocomp(OffsetCompensation)
@@ -125,6 +133,8 @@ class HP3458A(base.meter):
         #TODO: Offsetcompensation
         self.write("PRESET NORM")
         self.write("OHMF")
+        self.write("NDIG 8")
+        self.write("TRIG SGL")
         self.__set_range(mrange, nplc)
         self.__autoZero(AutoZero)
         self.__ocomp(OffsetCompensation)
