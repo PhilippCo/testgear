@@ -124,8 +124,8 @@ class meter(instrument):
             readings.append(self.get_reading(channel=channel))
         
         return { "mean"    : np.mean(readings), 
-                 "std"     : np.std(readings), 
-                 "std_ppm" : np.std(readings)/np.mean(readings) * 1e6
+                 "std"     : np.std(readings, ddof=1), 
+                 "std_ppm" : np.std(readings, ddof=1)/np.mean(readings) * 1e6
                }
 
 
