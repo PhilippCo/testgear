@@ -9,7 +9,7 @@ class F8588A(base.meter):
 
 
     def get_reading(self, channel=None):
-        self.__select_channel(channel)
+        #self.__select_channel(channel)
         return float(self.query("READ?"))
 
 
@@ -70,7 +70,7 @@ class F8588A(base.meter):
 
     def __conf_range(self, prefix:str, mrange, nplc):
         self.write(':SENS:FUNC "{0:s}"'.format(prefix))
-        self.write(":SENSE:{0:s}:RES 8".format(prefix))
+        self.write(":SENSE:{0:s}:RES MIN".format(prefix))
         
         if mrange is None:
             self.write(":SENS:{0:s}:RANGE:AUTO ON".format(prefix))
