@@ -44,3 +44,52 @@ class F8508A(base.meter):
     def conf_function_OHM4W(self, mrange=None, nplc=200, AutoZero=True, OffsetCompensation=True, channel=1):
         """configures the meter to measure 4w resistance. if range=None the meter is set to Autorange"""
         pass
+
+#if float(r) <= 2:
+#    self.visa.write("TRUE_OHMS 1.9")
+#    self.visa.write("TRUE_OHMS FAST_OFF")
+#    self.visa.write("TRUE_OHMS RESL7")
+
+#elif float(r) <= 20:
+#    self.visa.write("TRUE_OHMS 19")
+#    self.visa.write("TRUE_OHMS FAST_OFF")
+#    self.visa.write("TRUE_OHMS RESL7")
+    
+#elif float(r) <= 200:
+#    self.visa.write("TRUE_OHMS 190")
+#    self.visa.write("TRUE_OHMS FAST_OFF")
+#    self.visa.write("TRUE_OHMS RESL7")
+
+#elif float(r) <= 2e3:
+#    self.visa.write("TRUE_OHMS 1900")
+#    self.visa.write("TRUE_OHMS FAST_OFF")
+#    self.visa.write("TRUE_OHMS RESL7")
+
+#elif float(r) <= 20e3:
+#    self.visa.write("TRUE_OHMS 19000")
+#    self.visa.write("TRUE_OHMS FAST_OFF")
+#    self.visa.write("TRUE_OHMS RESL7")
+
+#elif float(r) <= 200e3:
+#    self.visa.write("OHMS 190e3")
+#    self.visa.write("OHMS FOUR_WR")
+#    self.visa.write("OHMS FAST_OFF")
+#    self.visa.write("OHMS RESL7")
+
+#elif float(r) <= 2e6:
+#    self.visa.write("OHMS 1.9e6")
+#    self.visa.write("OHMS FOUR_WR")
+#    self.visa.write("OHMS FAST_OFF")
+#    self.visa.write("OHMS RESL7")
+    
+#elif float(r) <= 20e6:
+#    self.visa.write("OHMS 19e6")
+#    self.visa.write("OHMS FOUR_WR")
+#    self.visa.write("OHMS FAST_OFF")
+#    self.visa.write("OHMS RESL7")
+
+#else:
+#    self.visa.write("OHMS 190e6")
+#    self.visa.write("OHMS FOUR_WR")
+#    self.visa.write("OHMS FAST_OFF")
+#    self.visa.write("OHMS RESL7")
