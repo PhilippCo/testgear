@@ -45,7 +45,7 @@ class F8588A(base.meter):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.__select_channel(channel)
         self.__conf_range("RES", mrange, nplc)
-        #Offset Compensation only support on 4W mode
+        #Offset Compensation only supported on 4W mode
 
 
     def conf_function_OHM4W(self, mrange=None, nplc=200, AutoZero=True, OffsetCompensation=True, channel=1):
@@ -56,8 +56,6 @@ class F8588A(base.meter):
             self.write(":SENSE:FRES:MODE TRUE") #True Ohms
         else:
             self.write(":SENSE:FRES:MODE NORM")
-
-        #:MODE NORMal|TRUE|HIV
 
 
     def __select_channel(self, channel):
@@ -90,5 +88,3 @@ class F8588A(base.meter):
 
     def __set_nplc(self, prefix:str, nplc):
         self.write(":SENSE:{0:s}:NPLC {1:d}".format(prefix, nplc))
-
-#inst.query(":SENSE:FRES:RANGE?")
