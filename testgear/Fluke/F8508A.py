@@ -8,7 +8,7 @@ class F8508A(base.meter):
 
     def get_reading(self, channel=None):
         self.__select_channel(channel)
-        return float(self.query("RDG?"))
+        return float(self.query("X?"))
 
 
     def __select_channel(self, channel):
@@ -18,7 +18,9 @@ class F8508A(base.meter):
 
     def conf_function_DCV(self, mrange=1000, nplc=200, AutoZero=True, HiZ=True, channel=None):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
-        pass
+        self.write("DCV {0:0.3f}".format(mrange))
+        self.write("DCV RESL 7")
+        self.write("DCV FAST_OFF")
 
 
     def conf_function_DCI(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=None):
