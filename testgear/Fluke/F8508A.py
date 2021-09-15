@@ -4,16 +4,24 @@ import testgear.base_classes as base
 
 class F8508A(base.meter):
     def init(self):
-        pass
+        self.set_timeout(180)
+        self.__guard()
+        self.idstr = self.query("*IDN?").strip()
+        self.write("TRG_SRCE EXT") #no internal trigger
+
 
     def get_reading(self, channel=None):
-        self.__select_channel(channel)
-        return float(self.query("X?"))
+        return float(self.query("X?")) #X? is equal to *TRG;RDG?
 
 
-    def __select_channel(self, channel):
-        #to be done
-        pass
+    def select_terminal(self, terminal="FRONT"):
+        """select terminal for measurement FRONT, REAR or OFF"""
+        self.write("INPUT {0}".format(terminal))
+
+
+    def __guard(self, guard=True):
+        self.write("GUARD INT") #default on power on
+        #self.write("GUARD EXT")
 
 
     def conf_function_DCV(self, mrange=None, nplc=200, AutoZero=True, HiZ=True, channel=None):
