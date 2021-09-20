@@ -13,3 +13,4 @@ import testgear.sensor as sensor
 import testgear.Ahlborn as Ahlborn
 import testgear.Datron as Datron
 import testgear.Solartron as Solartron
+import testgear.Hioki as Hioki
