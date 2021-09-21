@@ -1,5 +1,6 @@
 
 
+from email.errors import NonPrintableDefect
 import pyvisa
 import numpy as np
 
@@ -8,7 +9,7 @@ class instrument:
 
     rm = None #Class variable for pyvisa resource manager
 
-    def __init__(self, visastr=None, gpib=None, gwip=None, ip=None):
+    def __init__(self, visastr=None, gpib=None, gwip=None, ip=None, serial=None):
         """open VISA instrument"""
 
         self.idstr = ""
@@ -27,10 +28,9 @@ class instrument:
 
         #ip address given
         if ip is not None:
-            visastr = "TCPIP::{0:s}::INSTR".format(ip)
+            visastr = self.ip2visa(ip)
 
-
-        if visastr is None:
+        if visastr is None: #if visastr is still None look for a default value
             visastr = self.default_VISA()
 
         if visastr is None: #check if VISA string is still None
@@ -44,6 +44,11 @@ class instrument:
     def default_VISA(self):
         """overload this method to define a default VISA string"""
         return None
+
+
+    def ip2visa(self, ip):
+        """overload this method for SOCKET communication"""
+        return "TCPIP::{0:s}::INSTR".format(ip)
 
 
     def __repr__(self):
