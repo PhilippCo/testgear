@@ -27,7 +27,7 @@ class PU4J():
 
     def get_temp(self):
         session = requests.Session()
-        response = session.get("http://10.33.46.47/app/app.app?temp=%5B%5D")
+        response = session.get("http://{0:s}/app/app.app?temp=%5B%5D".format(self.ip))
         data = json.loads(response.text)["temp"]
         setpoint = data["target"]
         measured = data["monitored"]
