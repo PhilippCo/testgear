@@ -14,3 +14,5 @@ import testgear.Ahlborn as Ahlborn
 import testgear.Datron as Datron
 import testgear.Solartron as Solartron
 import testgear.Hioki as Hioki
+import testgear.Espec as Espec
+
