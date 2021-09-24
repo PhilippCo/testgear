@@ -53,3 +53,27 @@ class HP53131A(base.meter):
 # one have to Abort the counting before one can fetch the data
 # HP53131.write(":Abort")
 # count = float(HP53131.query(":FETCH?"))
+
+
+    #  HP 53131A
+    # The <sensor_function> strings are:
+    #“[:][XNONe:]DCYCle [1]”
+    #or
+    #“[:][XNONe:]PDUTycycle [1]”
+    #“[:][XNONe:]FALL:TIME [1]”
+    #or
+    #“[:][XNONe:]FTIMe [1]”
+    #“[:][XNONe:]FREQuency [1|2|3]”
+    #“[:][XNONe:]FREQuency:RATio [ 1,2 | 1,3 | 2,1 | 3,1 ]”
+    #“[:][XNONe:]NWIDth [1]”
+    #“[:][XNONe:]PERiod [1|2|3]”
+    #“[:][XNONe:]PHASe [1,2]”
+    #“[:][XNONe:]PWIDth [1]”
+    #“[:][XNONe:]TINTerval [1,2]”
+    #“[:][XNONe:]TOTalize [1]”
+    #“[:][XNONe:]RISE:TIME [1]”
+    #or
+    #“[:][XNONe:]RTIMe [1]”
+    #“[:][XNONe:]VOLTage:MAXimum [1|2]”
+    #“[:][XNONe:]VOLTage:MINimum [1|2]”
+    #“[:][XNONe:]VOLTage:PTPeak [1|2]”
