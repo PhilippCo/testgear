@@ -2,12 +2,17 @@ import testgear.base_classes as base
 
 class DS2072(base.scope):
     def init(self):
-        self.timebase = timebase_class(self.resource)
+        self.idstr = self.query("*IDN?").strip()
 
 
-class timebase_class(base.instrument):
-    def __init__(self, resource):
-        self.resource = resource
+    def set_time_date(self):
+        pass
 
-    def hallo(self):
-        print(self.query("*IDN?"))
+
+    def screenshot(self, filename=None):
+        self.write(":DISPlay:DATA?")
+        img = self.resource.read_raw()
+        newFile = open("screen.bmp", "wb")
+        newFile.write(img[11:-1])
+
+
