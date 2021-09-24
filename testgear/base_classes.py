@@ -1,17 +1,15 @@
-
-
-from email.errors import NonPrintableDefect
 import pyvisa
 import numpy as np
 
 class instrument:
     """This class abstracts pyvisa from all instruments"""
 
-    rm = None #Class variable for pyvisa resource manager
+    rm          = None #Class variable for pyvisa resource manager
+    instruments = []   #collect references to all instruments
 
     def __init__(self, visastr=None, gpib=None, gwip=None, ip=None, serial=None):
         """open VISA instrument"""
-
+        instrument.instruments.append(self) #append to the list of instruments
         self.idstr = ""
 
         #create pyvisa instance if needed
@@ -39,6 +37,17 @@ class instrument:
         self.resource = instrument.rm.open_resource(visastr)
         self.visastr  = visastr
         self.init() #call function to initialize instrument
+
+
+    def trigger_all(self):
+        """trigger all instrument instances"""
+        for instance in instrument.instruments:
+            instance.trigger()
+
+
+    def trigger(self):
+        """trigger a measurement - used to trigger multiple instruments at the same time"""
+        print("Class {} wurde getriggert".format(type(self).__name__))
 
 
     def default_VISA(self):
@@ -106,6 +115,7 @@ class instrument:
 
 
     def __del__(self):
+        #ToDo: delete instrument from instruments list
         self.close() #close instrument
         #print("Class {} destroyed".format(type(self).__name__))
 
