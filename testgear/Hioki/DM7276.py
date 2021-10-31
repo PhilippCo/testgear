@@ -34,12 +34,9 @@ class DM7276(base.meter):
         return self.lasttemp
 
 
-    def screenshot(self, filename=None):
+    def screenshot(self, filename="screen.bmp"):
         self.write(":HCOPy:SDUMp:DATA?")
         img = self.resource.read_raw()
-
-        if filename is None:
-            filename = "screen.bmp"
         newFile = open(filename, "wb")
         newFile.write(img[8:-2])
 
