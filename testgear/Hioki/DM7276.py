@@ -1,10 +1,11 @@
 """Hioki DM7276 7.5 digit DVM"""
 
 import testgear.base_classes as base
+import datetime
 
 class DM7276(base.meter):
     def init(self):
-        self.lasttemp = -1
+        self.lasttemp = -300
 
         self.set_timeout(10)
         self.resource.read_termination  = "\r\n"
@@ -23,16 +24,12 @@ class DM7276(base.meter):
 
 
     def set_time_date(self):
-        """set time and date to compute date"""
-        pass
+        """set time and date to computer date"""
+        now = datetime.datetime.now()
+        self.write(":SYSTem:TIME {0:d},{1:d},{2:d}".format(now.hour, now.minute, now.second))
+        self.write(":SYSTem:DATE {0:d},{1:d},{2:d}".format(now.year-2000, now.month, now.day))
 
     
-    def scale(self, offset=0, gain=1):
-        if offset == 0 and gain == 1:
-            pass #scaling ausschalten
-        else:
-            pass
-
     def get_temp(self):
         return self.lasttemp
 
@@ -40,7 +37,10 @@ class DM7276(base.meter):
     def screenshot(self, filename=None):
         self.write(":HCOPy:SDUMp:DATA?")
         img = self.resource.read_raw()
-        newFile = open("screen.bmp", "wb")
+
+        if filename is None:
+            filename = "screen.bmp"
+        newFile = open(filename, "wb")
         newFile.write(img[8:-2])
 
 
@@ -51,11 +51,15 @@ class DM7276(base.meter):
         return float(value)
 
     
-    def conf_function_DCV(self, mrange=10, nplc=100, AutoZero=True, HiZ=True, channel=None):
+    def conf_function_DCV(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=None):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange
         NPLC 0.02..100
         """
-        self.write(":VOLTAGE:DC:RANGE {0:0.3f}".format(mrange))
+        if mrange is None:
+            self.write(":VOLTAGE:DC:RANGE:AUTO ON")
+        else:
+            self.write(":VOLTAGE:DC:RANGE {0:0.3f}".format(mrange))
+
         self.write(":SENSe:VOLTage:DC:NPLCycles {0:0.2f}".format(nplc))
 
         if HiZ:
