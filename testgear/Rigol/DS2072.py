@@ -9,10 +9,10 @@ class DS2072(base.scope):
         pass
 
 
-    def screenshot(self, filename=None):
+    def screenshot(self, filename="screen.bmp"):
         self.write(":DISPlay:DATA?")
         img = self.resource.read_raw()
-        newFile = open("screen.bmp", "wb")
+        newFile = open(filename, "wb")
         newFile.write(img[11:-1])
 
 
