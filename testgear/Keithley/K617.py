@@ -3,6 +3,7 @@ import testgear.base_classes as base
 class K617(base.meter):
     def init(self):
         self.write("G1X") #switch prefix off
+        self.idstr = self.query("U0X")[:3]
 
 
     def get_reading(self, channel=1):
