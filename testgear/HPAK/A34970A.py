@@ -6,6 +6,7 @@ import numpy as np
 class A34970A(base.meter):
     def init(self):
         self.idstr = self.query("*IDN?").strip()
+        self.set_timeout(30)
 
 
     def default_VISA(self):
@@ -211,7 +212,7 @@ class A34970A(base.meter):
 
     
     def conf_pt100(self, channel=101):
-        self.conf_function_temperature(a)
+        self.conf_function_temperature()
 
 
 #hp34970a.query("CONFigure?") zeigt Konfigurationen der Scanliste
