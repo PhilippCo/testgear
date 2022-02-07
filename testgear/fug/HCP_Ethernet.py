@@ -17,6 +17,8 @@ class HCP_Ethernet(base.source):
 
 
     def set_output(self, voltage=None, current=None, enabled=True, frequency=None, resistance=None, channel=1):
+        #how to handle negative voltages?
+
         if enabled:
             self.query("F1")
         else:
