@@ -1,5 +1,18 @@
 """Agilent B2902A Precision Source/Measure Unit"""
 
+#######################################################################################################
+# To achieve non-root access to the USB TMC device (Ubuntu 20.04 LTS)
+#
+# sudo nano /etc/udev/rules.d/50-hpak.rules
+#
+# copy the following into the file:
+# SUBSYSTEMS=="usb", ATTRS{idVendor}=="0957", ATTRS{idProduct}=="8c18", GROUP="users", MODE="0666"
+#
+# reload the rules:
+# sudo udevadm control --reload
+#######################################################################################################
+
+
 import testgear.base_classes as base
 import numpy as np
 
