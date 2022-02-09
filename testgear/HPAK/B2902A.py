@@ -26,11 +26,11 @@ class B2902A(base.source):
 
         if voltage is not None:
             self.write(":SOUR{0:d}:FUNC:MODE VOLT".format(channel))
-            self.write(":SOUR{0:d}:VOLT {1:0.7f}".format(channel, current))
+            self.write(":SOUR{0:d}:VOLT {1:0.7f}".format(channel, voltage))
             
         elif current is not None:
             self.write(":SOUR{0:d}:FUNC:MODE CURR".format(channel))
-            self.write(":SOUR{0:d}:CURR {1:0.7f}".format(channel, voltage))
+            self.write(":SOUR{0:d}:CURR {1:0.7f}".format(channel, current))
 
 
     def get_output(self, channel=1):
@@ -57,4 +57,3 @@ class B2902A(base.source):
             obj.enabled = False
         
         return obj
-
