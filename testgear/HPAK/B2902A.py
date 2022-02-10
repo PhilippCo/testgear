@@ -41,7 +41,7 @@ class B2902A(base.source):
         if self.query(":OUTP{0:d}?".format(channel)).strip() == "1":
             obj.enabled = True
 
-            if self.query(":SOUR{0:d}:FUNC:MODE?".format(1)).strip() == "CURR":
+            if self.query(":SOUR{0:d}:FUNC:MODE?".format(channel)).strip() == "CURR":
                 obj.set_voltage = float(self.query(":SENS{0:d}:VOLT:PROT?".format(channel)).strip())
                 obj.set_current = float(self.query(":SOUR{0:d}:CURR?".format(channel)).strip())
 
