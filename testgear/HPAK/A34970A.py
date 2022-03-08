@@ -3,6 +3,13 @@
 import testgear.base_classes as base
 import numpy as np
 
+
+class scanlist(list):
+    #list with add method like in sets
+    def add(self, item):
+        if item not in self:
+            self.append(item)
+
 class A34970A(base.meter):
     def init(self):
         self.idstr = self.query("*IDN?").strip()
@@ -61,7 +68,7 @@ class A34970A(base.meter):
     def get_scanlist(self):
         data  = self.query("ROUTE:SCAN?")
         slist = data.split('@')[1].split(')')[0].split(',') 
-        return set(map(int, slist))
+        return scanlist(map(int, slist))
 
 
     def trigger_scan(self):
@@ -82,11 +89,12 @@ class A34970A(base.meter):
         return self.__scan2dict(self.query("READ?"))
 
 
-    def set_scanlist(self, slist:set):
+    def set_scanlist(self, slist:scanlist):
         strlist = ""
         for chan in slist:
             strlist += "{0:d}, ".format(chan)
         self.write("ROUTE:SCAN (@{0:s})".format(strlist[:-2]))
+
 
 
     def clear_scanlist(self):
