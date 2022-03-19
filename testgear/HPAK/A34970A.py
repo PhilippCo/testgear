@@ -199,7 +199,7 @@ class A34970A(base.meter):
         self.set_scanlist(slist)
 
 
-    def conf_function_temperature(self, mrange=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=1):
+    def conf_function_temperature(self, mrange=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=101):
         """configures the meter to measure DCI. if range=None the meter is set to Autorange"""
         slist = self.get_scanlist()
         slist.add(channel)
@@ -209,7 +209,7 @@ class A34970A(base.meter):
         self.set_scanlist(slist)
 
 
-    def conf_function_totalize(self, mrange=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=1):
+    def conf_function_totalize(self, mrange=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=101):
         """configures the meter to measure DCI. if range=None the meter is set to Autorange"""
         slist = self.get_scanlist()
         slist.add(channel)
@@ -220,7 +220,7 @@ class A34970A(base.meter):
 
     
     def conf_pt100(self, channel=101):
-        self.conf_function_temperature()
+        self.conf_function_temperature(channel=channel)
 
 
 #hp34970a.query("CONFigure?") zeigt Konfigurationen der Scanliste
