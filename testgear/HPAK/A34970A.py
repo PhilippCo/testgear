@@ -67,8 +67,11 @@ class A34970A(base.meter):
 
     def get_scanlist(self):
         data  = self.query("ROUTE:SCAN?")
-        slist = data.split('@')[1].split(')')[0].split(',') 
-        return scanlist(map(int, slist))
+        slist = data.split('@')[1].split(')')[0].split(',')
+        if len(slist[0]) == 0:
+            return scanlist([])
+        else: 
+            return scanlist(map(int, slist))
 
 
     def trigger_scan(self):
