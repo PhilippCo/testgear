@@ -48,7 +48,7 @@ class HP3478A(base.meter):
             self.write("Z0")
 
 
-    def conf_function_DCI(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=1):
+    def conf_function_DCI(self, mrange=None, nplc=10, AutoZero=True, HiZ=True, channel=1):
         """configures the meter to measure DCI. if range=None the meter is set to Autorange"""
         self.write("F5") #DCI Function
 
@@ -73,7 +73,7 @@ class HP3478A(base.meter):
             self.write("Z0")
 
 
-    def conf_function_ACV(self, mrange=None, nplc=None, AutoZero=True, HiZ=True, channel=1):
+    def conf_function_ACV(self, mrange=None, nplc=10, AutoZero=True, HiZ=True, channel=1):
         """configures the meter to measure ACV. if range=None the meter is set to Autorange"""
         self.write("F2") #ACV Function
 
@@ -103,7 +103,7 @@ class HP3478A(base.meter):
 
 
 
-    def conf_function_ACI(self, mrange=None, nplc=None, AutoZero=True, HiZ=True, channel=1):
+    def conf_function_ACI(self, mrange=None, nplc=10, AutoZero=True, HiZ=True, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.write("F6") #ACI Function
 
@@ -128,7 +128,7 @@ class HP3478A(base.meter):
             self.write("Z0")
 
 
-    def conf_function_OHM2W(self, mrange=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=1):
+    def conf_function_OHM2W(self, mrange=None, nplc=10, AutoZero=True, OffsetCompensation=True, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.write("F3") #2W Ohm Function
 
@@ -163,7 +163,7 @@ class HP3478A(base.meter):
             self.write("Z0")
 
 
-    def conf_function_OHM4W(self, mrange=None, nplc=100, AutoZero=True, OffsetCompensation=True, channel=1):
+    def conf_function_OHM4W(self, mrange=None, nplc=10, AutoZero=True, OffsetCompensation=True, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.write("F4") #4W Ohm Function
 
