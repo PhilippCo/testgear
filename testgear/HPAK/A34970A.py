@@ -223,7 +223,12 @@ class A34970A(base.meter):
 
     
     def conf_pt100(self, channel=101):
-        self.conf_function_temperature(channel=channel)
+        slist = self.get_scanlist()
+        slist.add(channel)
+
+        self.write("CONF:TEMP FRTD,85,+1.000000E+00,+3.000000E-06,(@{0:d})".format(channel))
+
+        self.set_scanlist(slist)
 
 
 #hp34970a.query("CONFigure?") zeigt Konfigurationen der Scanliste
