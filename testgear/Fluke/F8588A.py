@@ -13,7 +13,7 @@ class F8588A(base.meter):
         return float(self.query("READ?"))
 
 
-    def conf_function_DCV(self, mrange=1000, nplc=200, AutoZero=True, HiZ=True, channel=None):
+    def conf_function_DCV(self, mrange=1000, nplc=500, AutoZero=True, HiZ=True, channel=None):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.__select_channel(channel)
         self.__conf_range("VOLT:DC", mrange, nplc)
@@ -23,32 +23,32 @@ class F8588A(base.meter):
             self.write(":SENSE:VOLT:DC:IMPedance 10M")
 
 
-    def conf_function_DCI(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=None):
+    def conf_function_DCI(self, mrange=None, nplc=500, AutoZero=True, HiZ=True, channel=None):
         """configures the meter to measure DCI. if range=None the meter is set to Autorange"""
         self.__select_channel(channel)
         self.__conf_range("CURR:DC", mrange, nplc)
 
 
-    def conf_function_ACV(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=None):
+    def conf_function_ACV(self, mrange=None, nplc=500, AutoZero=True, HiZ=True, channel=None):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.__select_channel(channel)
         self.__conf_range("VOLT:AC", mrange, nplc)
 
 
-    def conf_function_ACI(self, mrange=None, nplc=100, AutoZero=True, HiZ=True, channel=None):
+    def conf_function_ACI(self, mrange=None, nplc=500, AutoZero=True, HiZ=True, channel=None):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.__select_channel(channel)
         self.__conf_range("CURR:AC", mrange, nplc)
   
 
-    def conf_function_OHM2W(self, mrange=None, nplc=100, AutoZero=True, OffsetCompensation=False, channel=1):
+    def conf_function_OHM2W(self, mrange=None, nplc=500, AutoZero=True, OffsetCompensation=False, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.__select_channel(channel)
         self.__conf_range("RES", mrange, nplc)
         #Offset Compensation only supported on 4W mode
 
 
-    def conf_function_OHM4W(self, mrange=None, nplc=200, AutoZero=True, OffsetCompensation=True, channel=1):
+    def conf_function_OHM4W(self, mrange=None, nplc=500, AutoZero=True, OffsetCompensation=True, channel=1):
         """configures the meter to measure 4w resistance. if range=None the meter is set to Autorange"""
         self.__select_channel(channel)
         self.__conf_range("FRES", mrange, nplc)
