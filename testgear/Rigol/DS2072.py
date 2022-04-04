@@ -50,7 +50,7 @@ class DS2072(base.scope):
         yorig = float(self.query(":WAVeform:YORigin?"))
         yref  = float(self.query(":WAVeform:YREFerence?"))
 
-        s = (np.array(list(data))-yref)*yinc + yorig
+        s = (np.array(list(data)) - yref - yorig)*yinc 
         t = np.linspace(0, (len(s)-1)*xinc, num=len(s)) + xorig
 
         return t, s
