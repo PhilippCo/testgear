@@ -67,11 +67,14 @@ class HP34401A(base.meter):
         self.__hiZ(HiZ)
 
 
-    def conf_function_ACV(self, mrange=None, nplc=None, AutoZero=True, HiZ=True, channel=1):
+    def conf_function_ACV(self, mrange=None, nplc=None, AutoZero=True, HiZ=True, filter=3, channel=1):
         """configures the meter to measure DCV. if range=None the meter is set to Autorange"""
         self.__conf_range("VOLT:AC", mrange)
         self.__autoZero(AutoZero)
         self.__hiZ(HiZ)
+
+        #AC Filter Bandwitch can be 3Hz, 20Hz, 200Hz
+        self.write("SENSe:DETector:BANDwidth {0:d}".format(filter))
 
 
     def conf_function_ACI(self, mrange=None, nplc=None, AutoZero=True, HiZ=True, channel=1):
