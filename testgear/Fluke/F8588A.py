@@ -51,12 +51,14 @@ class F8588A(base.meter):
     def conf_function_OHM4W(self, mrange=None, nplc=500, AutoZero=True, OffsetCompensation=True, channel=1):
         """configures the meter to measure 4w resistance. if range=None the meter is set to Autorange"""
         self.__select_channel(channel)
-        self.__conf_range("FRES", mrange, nplc)
-        if OffsetCompensation:
+        
+        if OffsetCompensation and mrange < 19.9e3:
             self.write(":SENSE:FRES:MODE TRUE") #True Ohms
         else:
             self.write(":SENSE:FRES:MODE NORM")
-
+        
+        self.__conf_range("FRES", mrange, nplc)
+        
 
     def __select_channel(self, channel):
         if channel is None:
