@@ -94,7 +94,7 @@ class F8508A(base.meter):
 
     def conf_function_OHM4W(self, mrange=None, nplc=200, AutoZero=True, OffsetCompensation=True, channel=1):
         """configures the meter to measure 4w resistance. if range=None the meter is set to Autorange"""
-        if not OffsetCompensation and mrange < 20e3: #True Ohms only up to 20kOhm
+        if not OffsetCompensation or mrange > 19.9e3: #True Ohms only up to 20kOhm
             if mrange is None:
                 self.write("OHMS AUTO")
             else:    
