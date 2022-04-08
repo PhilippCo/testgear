@@ -33,12 +33,13 @@ class F5730A(base.source):
                     fourWire = False
                     print("4W isn't available for 100Meg")
 
+            #set output BEFORE 4W to make sure it is available
+            self.write("OUT {0:0.6g}{1}, {2:0.6g}Hz;*CLS;OPER".format(value, unit, frequency))
+            
             if fourWire:
                 self.write("EXTSENSE ON")
             else:
                 self.write("EXTSENSE OFF")
-
-            self.write("OUT {0:0.6g}{1}, {2:0.6g}Hz;*CLS;OPER".format(value, unit, frequency))
 
         else: #not enabled
             self.write("STBY")
