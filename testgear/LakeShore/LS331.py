@@ -5,6 +5,8 @@ import testgear.base_classes as base
 class LS331(base.instrument):
     
     def init(self):
+        self.idstr = self.query("*IDN?").strip()
+
         #configure LS331 control
         # 1 - loop 1
         # A - input A
@@ -12,9 +14,8 @@ class LS331(base.instrument):
         # 1 - powerup enable
         # 2 - show heater power
         self.write("CSET 1, A, 2, 1, 2")
-        print(self.resource.query("*IDN?"))
         
-    
+        
     def check_inst(self):
         idn = self.query("*IDN?")
         if idn.split(",")[1] == "MODEL331S":
@@ -22,13 +23,12 @@ class LS331(base.instrument):
         else:
             return False
         
-    def close(self):
-        self.close()
-    
+
     def set_temp(self, temperature):
         data = "SETP 1, {0:0.3f}".format(temperature)
         #print(data)
         self.write(data)
         
+
     def get_temp(self):
         return float(self.query("CRDG?"))
