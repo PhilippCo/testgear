@@ -17,7 +17,10 @@ class DS2072(base.scope):
                 break
 
 
-    def screenshot(self, filename="screen.bmp"):
+    def screenshot(self, filename=None):
+        if filename is None:
+            filename = time.strftime("%Y%m%d-%H%M%S")+"_DS2000.bmp"
+
         self.write(":DISPlay:DATA?")
         img = self.resource.read_raw()
         newFile = open(filename, "wb")
@@ -45,14 +48,54 @@ class DS2072(base.scope):
 
         self.opc()
     
+
     def force_trigger(self):
         self.write(":TFORce")
 
 
+    def get_waveform_memory(self, channel=1):
+        #use this method to get the whole memory
+        mdepth = int(self.query(":ACQuire:MDEPth?"))
+
+        sr = float(self.query(":ACQuire:SRATe?"))
+
+        self.write(":STOP")
+        self.write(":WAV:SOUR CHAN{0:d}".format(channel))
+        self.write(":WAV:MODE RAW")
+        self.write(":WAVeform:POINts {0:d}".format(mdepth))
+        self.write(":WAV:RES")
+        self.write(":WAV:BEG")
+
+        sample = []
+
+        while True:
+            status = self.query(":WAV:STAT?")
+            print("lese Daten..")
+            self.write(":WAV:DATA?")
+            data = self.resource.read_raw()
+            sample+= list(data[11:-1])
+            print(len(sample))
+                
+            if status[0] == 'I':
+                self.write(":WAV:END")
+                break
+
+        yinc  = float(self.query(":WAVeform:YINCrement?"))
+        yorig = float(self.query(":WAVeform:YORigin?"))
+        yref  = float(self.query(":WAVeform:YREFerence?"))
+
+        xorig = float(self.query(":WAVeform:XORigin?"))
+
+        s = (np.array(sample) - yref - yorig)*yinc
+        t = np.linspace(0, (mdepth-1)*1/sr, num=mdepth) + xorig
+
+        return t, s
+
 
     def get_waveform(self, channel=1):
+        #returns the datapoints from screen
         self.write(":WAVeform:SOURce CHAN{0:d}".format(channel))
-
+        self.write(":WAV:MODE NORM")
         self.write(":WAVeform:FORMat BYTE")
         
         self.write(":WAVeform:DATA?")
