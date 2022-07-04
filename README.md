@@ -1,6 +1,11 @@
 # testgear
 Package to control a lot of testgear in an easy and uniform way
 
+to install type: 
+
+```
+pip3 install git+https://github.com/PhilippCo/testgear.git#egg=testgear
+```
 
 ## Multimeter
 The multimeter configuration is done by using a method for every function to make use of autocompletion during writing your code.
