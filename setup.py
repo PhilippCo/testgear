@@ -8,5 +8,5 @@ setup(
     author_email='philipp.cochems@gmail.com',
     description='Package to control test gear',
     packages=find_packages(),    
-    install_requires=['numpy >= 1.11.1', 'pyvisa', 'pyvisa-py'],
+    install_requires=['numpy >= 1.11.1', 'pyvisa', 'pyvisa-py', 'numpy'],
 )
