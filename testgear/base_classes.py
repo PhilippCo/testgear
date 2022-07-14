@@ -133,6 +133,14 @@ class source(instrument):
 
 
 class meter(instrument):
+    def __init__(self, *args, **kwargs):
+
+        if "get_reading" not in dir(self):
+            print("WARNING: get_reading(self, channel) needs to be implemented!")
+
+        super().__init__(*args, **kwargs)
+
+
     def read_avg(self, averages, channel=None):
         readings = []
         for _ in range(0, averages):
@@ -142,11 +150,6 @@ class meter(instrument):
                  "std"     : np.std(readings, ddof=1), 
                  "std_ppm" : np.std(readings, ddof=1)/np.mean(readings) * 1e6
                }
-
-
-    def get_reading(self, channel=None):
-        """returns the actual value"""
-        return np.nan
 
 
 class scope(instrument):
