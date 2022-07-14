@@ -122,14 +122,21 @@ class instrument:
 
 
 class source(instrument):
-    def set_output(self, voltage=None, current=None, enabled=True, frequency=0, resistance=None, fourWire=False, channel=1):
-        #every source should have a set_output method
-        pass
+    def __init__(self, *args, **kwargs):
 
-    def get_output(self):
-        #every source should habe a get_output method
-        obj = output_status()
-        return obj
+        if "set_output" not in dir(self):
+            print("WARNING: set_output(self, voltage, current, enabled, frequency, resistance, fourWire, channel) needs to be implemented!")
+
+        if "get_output" not in dir(self):
+            print("WARNING: get_output(self) needs to be implemented!")
+
+        super().__init__(*args, **kwargs)
+
+
+    # def get_output(self):
+    #     #every source should have a get_output method
+    #     obj = output_status()
+    #     return obj
 
 
 class meter(instrument):
