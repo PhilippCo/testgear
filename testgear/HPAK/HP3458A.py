@@ -209,16 +209,17 @@ class HP3458A(base.meter):
         #equivalent 100MS/s
         #Aperture fixed 2ns (sample&hold)
 
-        self.write("PRESET FAST")#TARM SYN, TRIG AUTO, DINT FORMATS
+        #self.write("PRESET FAST")#TARM SYN, TRIG AUTO, DINT FORMATS
         self.write("MEM FIFO")#ENABLE READING MEMORY, FIFO MODE
         self.write("MFORMAT SINT")#SINT READING MEMORY FORMAT
         self.write("OFORMAT SINT")
-        self.write("SSDC 10")#SUB-SAMPLING, 10 V RANGE, LEVEL SYNC SOURCE EVENT (DEFAULT EVENT)
-        self.write("SWEEP 10E-9,500")#4000 SAMPLES, 10 ns EFFECTIVE INTERVAL
+        self.write("SSDC 0.1")#SUB-SAMPLING, 10 V RANGE, LEVEL SYNC SOURCE EVENT (DEFAULT EVENT)
+        self.write("SWEEP {0:.3E},{1:d}".format(srate, samples))#4000 SAMPLES, 10 ns EFFECTIVE INTERVAL
         self.write("DELAY 500E-9")
-        self.write("LEVEL 10 DC")#LEVEL TRIGGER AT 10% OF RANGE, DC-COUPLED
+        #self.write("LEVEL 10 DC")#LEVEL TRIGGER AT 10% OF RANGE, DC-COUPLED
         self.write("SLOPE POS")#LEVEL TRIGGER ON POSITIVE SLOPE
-        self.write("SSRC LEVEL")#LEVEL SYNC SOURCE EVENT
+        #self.write("SSRC LEVEL")#LEVEL SYNC SOURCE EVENT
+        self.write("SSRC EXT")#LEVEL SYNC SOURCE EVENT
         self.write("TARM SGL")#ENABLE SAMPLING
         
         t = np.linspace(delay, samples*srate+delay, num=samples)
