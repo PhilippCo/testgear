@@ -16,4 +16,5 @@ import testgear.Solartron as Solartron
 import testgear.Hioki as Hioki
 import testgear.Espec as Espec
 import testgear.fug as fug
+import testgear.RohdeSchwarz as RohdeSchwarz
 
