@@ -2,6 +2,14 @@
 import testgear.base_classes as base
 
 class HMP4040(base.source):
+    def init(self):
+        self.idstr = self.query("*IDN?").strip()
+
+
+    def default_VISA(self):
+        return 'ASRL/dev/ttyUSB0::INSTR'
+
+
     def set_output(self, voltage=None, current=None, enabled=True, resistance=None, frequency=None, channel=1):
         self.write("INST OUT{:d}".format(channel))
 
@@ -18,9 +26,12 @@ class HMP4040(base.source):
 
 
     def get_output(self, channel=1):
-        self.write("INST OUT{:d}".format(channel))
         """return an object which reflects the output conditions"""
+
+        self.write("INST OUT{:d}".format(channel))
+        
         obj = base.output_status()
+        obj.channel = channel
 
         obj.set_voltage = float(self.query("VOLTage?"))
         obj.set_current = float(self.query("CURRent?"))
