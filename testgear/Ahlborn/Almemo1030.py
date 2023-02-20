@@ -6,7 +6,7 @@ class Almemo1030(base.source):
         self.resource.baud_rate = 9600
     
     def default_VISA(self):
-        return 'ASRL/dev/ttyUSB0::INSTR'
+        return 'ASRL/dev/serial/by-id/usb-Silicon_Labs_ALMEMO_to_USB_11091439-if00-port0::INSTR'
 
     def get_temp(self):
         self.write("p")
