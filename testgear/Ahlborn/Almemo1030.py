@@ -15,3 +15,9 @@ class Almemo1030(base.source):
         self.resource.read_raw()
 
         return float(str(data)[6:-10])
+    
+    def set_output(self, voltage, current, enabled, frequency, resistance, fourWire, channel):
+        pass
+    
+    def get_output(self):
+        pass
