@@ -25,10 +25,15 @@ class HCP_Ethernet(base.source):
             self.query("F0")
 
         if voltage is not None:
-            self.query("U{0:0.3f}".format(voltage))
-        
+            if voltage < 0:
+                self.query("P1") #Polarity Switch to negative
+            else:
+                self.query("P0") #Polarity Switch to positive
+                
+            self.query("U{0:0.3f}".format( abs(voltage) ))
+            
         if current is not None:
-            self.query("I{0:0.7f}".format(current))
+            self.query("I{0:0.7f}".format( abs(current) ))
 
 
     def get_output(self, channel=1):
@@ -40,7 +45,13 @@ class HCP_Ethernet(base.source):
         else:
             obj.enabled = False
 
-        obj.set_voltage = float(self.query(">s0?").split(":")[1])
+        set_voltage = float(self.query(">s0?").split(":")[1])
+        
+        if self.query(">BX?") == 'BX:1':
+            set_voltage *= -1
+        
+        obj.set_voltage = set_voltage
+        
         obj.set_current = float(self.query(">s1?").split(":")[1])
         
         obj.voltage = float(self.query(">m0?").split(":")[1])
