@@ -28,6 +28,14 @@ class HP34401A(base.meter):
 
     def get_reading(self, channel=1):
         return float(self.query("READ?"))
+    
+
+    def trigger_read(self):
+        self.write("INIT")
+
+
+    def get_triggered_read(self):
+        return float(self.query("FETCH?"))
 
 
     def __conf_range(self, prefix:str, range):
