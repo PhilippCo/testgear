@@ -5,7 +5,8 @@ import testgear.base_classes as base
 class HP34401A(base.meter):
     def init(self):
         self.set_timeout(10)
-        self.idstr = self.query("*IDN?").strip()
+        self.idstr  = self.query("*IDN?").strip()
+        self.calstr = self.query("CALibration:STRing?").strip()
 
 
     def default_VISA(self):

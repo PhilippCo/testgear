@@ -10,7 +10,8 @@ class instrument:
     def __init__(self, visastr=None, gpib=None, gwip=None, ip=None, serial=None):
         """open VISA instrument"""
         instrument.instruments.append(self) #append to the list of instruments
-        self.idstr = ""
+        self.idstr  = ""
+        self.calstr = ""
 
         #create pyvisa instance if needed
         if instrument.rm == None:
