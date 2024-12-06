@@ -47,6 +47,26 @@ class F5730A(base.source):
         self.__wait_for_settling()
 
 
+    def set_cal_point(self, calpoint):
+        if calpoint["mode"] == "DCV" or calpoint["mode"] == "ACV":
+            self.set_output(voltage=calpoint["value"], current=None, enabled=True, frequency=calpoint["frequency"], resistance=None, fourWire=False, channel=1)
+        
+        if calpoint["mode"] == "DCI" or calpoint["mode"] == "ACI":
+            self.set_output(voltage=None, current=calpoint["value"], enabled=True, frequency=calpoint["frequency"], resistance=None, fourWire=False, channel=1)
+        
+        if calpoint["mode"] == "OHM2W":
+            self.set_output(voltage=None, current=None, enabled=True, frequency=0, resistance=calpoint["value"], fourWire=False, channel=1)
+
+        if calpoint["mode"] == "OHM4W":
+            self.set_output(voltage=None, current=None, enabled=True, frequency=0, resistance=calpoint["value"], fourWire=True, channel=1)
+        
+        if calpoint["mode"] == "FREQ":
+            self.set_output(voltage=calpoint["value"], current=None, enabled=True, frequency=calpoint["frequency"], resistance=None, fourWire=False, channel=1)
+        
+        return {'output': float(self.query("ADJOUT?").split(",")[0]), 'uncertainty': float(self.query("UNCERT?").split(",")[0])}
+        
+        
+        
     def __wait_for_settling(self):
         settled = False
         while not settled:

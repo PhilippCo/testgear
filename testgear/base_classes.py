@@ -66,10 +66,14 @@ class instrument:
         string += "Class:\t\t{}\n".format(type(self).__name__)
         string += "VISA String:\t{}\n".format(self.visastr)
         string += "ID String:\t{}\n".format(self.idstr)
+        string += "CAL String:\t{}\n".format(self.calstr)
         string += "Timeout:\t{0:0.3f} s\n".format(self.resource.timeout/1000)
 
         return string
 
+    
+    def get_class(self):
+        return type(self).__name__
 
     def is_type_of(self, insttype):
         """Check if class is of a specific type"""
@@ -141,6 +145,11 @@ class source(instrument):
 
 
 class meter(instrument):
+    
+    spec   = {}
+    mode   = None
+    mrange = None
+    
     def __init__(self, *args, **kwargs):
 
         if "get_reading" not in dir(self):
@@ -148,7 +157,31 @@ class meter(instrument):
 
         super().__init__(*args, **kwargs)
 
+        
+    def get_spec(self, value, mode='DCV', mrange=None, frequency=0, calperiod="1 year"):    
+        if mode not in self.spec[calperiod].keys():
+            return {'reading': 0, 'range': 0}
+        
+        for prange in self.spec[calperiod][mode].keys():
+            if prange >= value:
+                break
+        
+        #for AC we also need to consider the frequency
+        if mode[:2] == 'AC':
+            for frange in self.spec[calperiod][mode][prange].keys():
+                if frange >= frequency:
+                    break
+                    
+            return self.spec[calperiod][mode][prange][frange]
+        
+        return self.spec[calperiod][mode][prange]
 
+    
+    def get_error(self, value, mode='DCV', mrange=None, frequency=0, calperiod="1 year"):
+        spec = self.get_spec(value=value, mode=mode, mrange=mrange, frequency=frequency, calperiod=calperiod)
+        return np.abs(value * spec["reading"]*1e-2 + spec["mrange"] * spec["range"]*1e-2)
+
+    
     def read_avg(self, averages, channel=None):
         readings = []
         for _ in range(0, averages):
