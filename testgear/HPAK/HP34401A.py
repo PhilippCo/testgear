@@ -138,12 +138,15 @@ class HP34401A(base.meter):
 
 
     def __conf_range(self, prefix:str, range):
-        self.write("CONF:{0:s}".format(prefix))
+        #self.write("CONF:{0:s}".format(prefix))
         
         if range is None:
-            self.write("{0:s}:RANGE:AUTO ON".format(prefix))
+            #self.write("{0:s}:RANGE:AUTO ON".format(prefix))
+            self.write("CONF:{0:s}".format(prefix))
         else:
-            self.write("{0:s}:RANGE {1:0.6f}".format(prefix, range))
+            self.write("CONF:{0:s} {1:0.6f}".format(prefix, range))
+            #self.write("{0:s}:RANGE {1:0.6f}".format(prefix, range)
+            
         
         #  FUNCtion "FREQuency"
         #  FUNCtion "PERiod"
@@ -173,7 +176,6 @@ class HP34401A(base.meter):
         self.__conf_range("CURR:DC", mrange)
         self.write("CURR:DC:NPLC {0:0.3f}".format(nplc))
         self.__autoZero(AutoZero)
-        self.__hiZ(HiZ)
         self.mode = 'DCI'
         self.mrange = mrange
 
@@ -217,8 +219,8 @@ class HP34401A(base.meter):
     
     def conf_function_FREQ(self, mrange=None, nplc=None, AutoZero=True, HiZ=True, filter=3, channel=1):
         """configures the meter to measure Frequency. if range=None the meter is set to Autorange"""
-        self.__conf_range("FREQuency", mrange)
-        self.__hiZ(HiZ)
+        self.write("CONF:FREQ")
+        self.write("FREQ:APER 0.1")
         
         
     def set_mode(self, mode, mrange=None):
@@ -247,7 +249,7 @@ class HP34401A(base.meter):
             return
         
         if mode == "FREQ":
-            self.conf_function_OHM4W(mrange=mrange)
+            self.conf_function_FREQ(mrange=mrange)
             return
         
         print("Mode not supported!")

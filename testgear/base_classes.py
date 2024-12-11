@@ -162,6 +162,9 @@ class meter(instrument):
         if mode not in self.spec[calperiod].keys():
             return {'reading': 0, 'range': 0}
         
+        if mode == "FREQ":
+            value = frequency
+            
         for prange in self.spec[calperiod][mode].keys():
             if prange >= value:
                 break
@@ -179,6 +182,10 @@ class meter(instrument):
     
     def get_error(self, value, mode='DCV', mrange=None, frequency=0, calperiod="1 year"):
         spec = self.get_spec(value=value, mode=mode, mrange=mrange, frequency=frequency, calperiod=calperiod)
+        
+        if mode == "FREQ":
+            return np.abs(frequency * spec["reading"]*1e-2 + spec["mrange"] * spec["range"]*1e-2)
+            
         return np.abs(value * spec["reading"]*1e-2 + spec["mrange"] * spec["range"]*1e-2)
 
     

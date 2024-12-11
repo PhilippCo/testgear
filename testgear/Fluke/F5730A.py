@@ -62,6 +62,7 @@ class F5730A(base.source):
         
         if calpoint["mode"] == "FREQ":
             self.set_output(voltage=calpoint["value"], current=None, enabled=True, frequency=calpoint["frequency"], resistance=None, fourWire=False, channel=1)
+            return {'output': calpoint["frequency"], 'uncertainty': 42}
         
         return {'output': float(self.query("ADJOUT?").split(",")[0]), 'uncertainty': float(self.query("UNCERT?").split(",")[0])}
         
