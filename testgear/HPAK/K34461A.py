@@ -4,6 +4,15 @@ import testgear.base_classes as base
 import testgear.HPAK as HPAK
 
 class K34461A(HPAK.HP34401A):
+    
+    def check_instrument(self):
+        #Check if the class is intendend to be used with the connected device
+        if self.idstr.split(",")[1] == "34461A":
+            return True
+        else:
+            return False
+    
+    
     spec_1year = { 
         'DCV': { 
             120e-3: {'mrange': 100e-3, 'reading': 0.0050, 'range': 0.0035},
@@ -101,3 +110,58 @@ class K34461A(HPAK.HP34401A):
     }  
     
     spec = { '1 year': spec_1year }
+
+    
+    
+    cal1 = [
+        {'mode': 'DCI', 'mrange': 10     , 'value': 2     , 'frequency': 0},
+        ]
+    
+    cal2 = [
+        {'mode': 'DCV', 'mrange': 100e-3, 'value': 100e-3, 'frequency': 0},
+        {'mode': 'DCV', 'mrange': 1     , 'value': 1     , 'frequency': 0},
+        {'mode': 'DCV', 'mrange': 10    , 'value': 10    , 'frequency': 0},
+        {'mode': 'DCV', 'mrange': 10    , 'value': -10   , 'frequency': 0},
+        {'mode': 'DCV', 'mrange': 100   , 'value': 100   , 'frequency': 0},
+        {'mode': 'DCV', 'mrange': 1000  , 'value': 1000  , 'frequency': 0},
+
+        {'mode': 'ACV', 'mrange': 100e-3, 'value': 100e-3, 'frequency': 1e3  },
+        {'mode': 'ACV', 'mrange': 100e-3, 'value': 100e-3, 'frequency': 50e3 },
+        {'mode': 'ACV', 'mrange': 1     , 'value': 1     , 'frequency': 1e3  },
+        {'mode': 'ACV', 'mrange': 1     , 'value': 1     , 'frequency': 50e3 },
+        {'mode': 'ACV', 'mrange': 10    , 'value': 10    , 'frequency': 10   },
+        {'mode': 'ACV', 'mrange': 10    , 'value': 10    , 'frequency': 1e3  },
+        {'mode': 'ACV', 'mrange': 10    , 'value': 10    , 'frequency': 20e3 },
+        {'mode': 'ACV', 'mrange': 10    , 'value': 10    , 'frequency': 50e3 },
+        {'mode': 'ACV', 'mrange': 10    , 'value': 10    , 'frequency': 100e3},
+        {'mode': 'ACV', 'mrange': 10    , 'value': 10    , 'frequency': 300e3},
+        {'mode': 'ACV', 'mrange': 100   , 'value': 100   , 'frequency': 1e3  },
+        {'mode': 'ACV', 'mrange': 100   , 'value': 100   , 'frequency': 50e3 },
+        {'mode': 'ACV', 'mrange': 750   , 'value': 750   , 'frequency': 1e3  },
+
+        {'mode': 'OHM4W', 'mrange': 100  , 'value': 100  , 'frequency': 0},
+        {'mode': 'OHM4W', 'mrange': 1e3  , 'value': 1e3  , 'frequency': 0},
+        {'mode': 'OHM4W', 'mrange': 10e3 , 'value': 10e3 , 'frequency': 0},
+        {'mode': 'OHM4W', 'mrange': 100e3, 'value': 100e3, 'frequency': 0},
+        {'mode': 'OHM4W', 'mrange': 1e6  , 'value': 1e6  , 'frequency': 0},
+        {'mode': 'OHM4W', 'mrange': 10e6 , 'value': 10e6 , 'frequency': 0},
+
+        {'mode': 'DCI', 'mrange': 10e-3 , 'value': 10e-3 , 'frequency': 0},
+        {'mode': 'DCI', 'mrange': 100e-3, 'value': 100e-3, 'frequency': 0},
+        {'mode': 'DCI', 'mrange': 1     , 'value': 1     , 'frequency': 0},
+        {'mode': 'DCI', 'mrange': 3     , 'value': 2     , 'frequency': 0},
+
+        {'mode': 'ACI', 'mrange': 10e-3 , 'value': 10e-3 , 'frequency': 1e3},
+        {'mode': 'ACI', 'mrange': 100e-3, 'value': 100e-3, 'frequency': 1e3},
+        {'mode': 'ACI', 'mrange': 1     , 'value': 1     , 'frequency': 1e3},
+        {'mode': 'ACI', 'mrange': 3     , 'value': 2     , 'frequency': 1e3},
+
+        {'mode': 'FREQ', 'mrange': 100e-3, 'value': 10e3 , 'frequency': 300e3}
+
+        ]
+    
+    
+    callist = [
+        {'instruction': "Connect the Fluke 5730A to the 10A input", 'calpoints': cal1},
+        {'instruction': "Connect the Fluke 5730A to Input, Sense and the 3A input", 'calpoints': cal2}     
+    ]
