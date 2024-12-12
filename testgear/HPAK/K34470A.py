@@ -180,7 +180,7 @@ class K34470A(HPAK.K34461A):
         {'mode': 'ACI', 'mrange': 1     , 'value': 1     , 'frequency': 1e3},
         {'mode': 'ACI', 'mrange': 3     , 'value': 2     , 'frequency': 1e3},
 
-        {'mode': 'FREQ', 'mrange': 100e-3, 'value': 10e3 , 'frequency': 300e3}
+        {'mode': 'FREQ', 'mrange': 100e-3, 'value': 100e-3 , 'frequency': 300e3}
 
         ]
     
