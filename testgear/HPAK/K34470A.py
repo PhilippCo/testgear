@@ -50,33 +50,33 @@ class K34470A(HPAK.K34461A):
                       100e3: {'mrange': 100e-3, 'reading': 0.15, 'range': 0.05},
                       300e3: {'mrange': 100e-3, 'reading': 1.00, 'range': 0.10}
                     },
-            1     : { 5    : {'mrange': 100e-3, 'reading': 0.50, 'range': 0.02},
-                      10   : {'mrange': 100e-3, 'reading': 0.10, 'range': 0.02},
-                      20e3 : {'mrange': 100e-3, 'reading': 0.05, 'range': 0.02},
-                      50e3 : {'mrange': 100e-3, 'reading': 0.07, 'range': 0.03},
-                      100e3: {'mrange': 100e-3, 'reading': 0.15, 'range': 0.05},
-                      300e3: {'mrange': 100e-3, 'reading': 1.00, 'range': 0.10}
+            1     : { 5    : {'mrange': 1, 'reading': 0.50, 'range': 0.02},
+                      10   : {'mrange': 1, 'reading': 0.10, 'range': 0.02},
+                      20e3 : {'mrange': 1, 'reading': 0.05, 'range': 0.02},
+                      50e3 : {'mrange': 1, 'reading': 0.07, 'range': 0.03},
+                      100e3: {'mrange': 1, 'reading': 0.15, 'range': 0.05},
+                      300e3: {'mrange': 1, 'reading': 1.00, 'range': 0.10}
                     },
-            10    : { 5    : {'mrange': 100e-3, 'reading': 0.50, 'range': 0.02},
-                      10   : {'mrange': 100e-3, 'reading': 0.10, 'range': 0.02},
-                      20e3 : {'mrange': 100e-3, 'reading': 0.05, 'range': 0.02},
-                      50e3 : {'mrange': 100e-3, 'reading': 0.07, 'range': 0.03},
-                      100e3: {'mrange': 100e-3, 'reading': 0.15, 'range': 0.05},
-                      300e3: {'mrange': 100e-3, 'reading': 1.00, 'range': 0.10}
+            10    : { 5    : {'mrange': 10, 'reading': 0.50, 'range': 0.02},
+                      10   : {'mrange': 10, 'reading': 0.10, 'range': 0.02},
+                      20e3 : {'mrange': 10, 'reading': 0.05, 'range': 0.02},
+                      50e3 : {'mrange': 10, 'reading': 0.07, 'range': 0.03},
+                      100e3: {'mrange': 10, 'reading': 0.15, 'range': 0.05},
+                      300e3: {'mrange': 10, 'reading': 1.00, 'range': 0.10}
                     },
-            100   : { 5    : {'mrange': 100e-3, 'reading': 0.50, 'range': 0.02},
-                      10   : {'mrange': 100e-3, 'reading': 0.10, 'range': 0.02},
-                      20e3 : {'mrange': 100e-3, 'reading': 0.05, 'range': 0.02},
-                      50e3 : {'mrange': 100e-3, 'reading': 0.07, 'range': 0.03},
-                      100e3: {'mrange': 100e-3, 'reading': 0.15, 'range': 0.05},
-                      300e3: {'mrange': 100e-3, 'reading': 1.00, 'range': 0.10}
+            100   : { 5    : {'mrange': 100, 'reading': 0.50, 'range': 0.02},
+                      10   : {'mrange': 100, 'reading': 0.10, 'range': 0.02},
+                      20e3 : {'mrange': 100, 'reading': 0.05, 'range': 0.02},
+                      50e3 : {'mrange': 100, 'reading': 0.07, 'range': 0.03},
+                      100e3: {'mrange': 100, 'reading': 0.15, 'range': 0.05},
+                      300e3: {'mrange': 100, 'reading': 1.00, 'range': 0.10}
                     },
-            750   : { 5    : {'mrange': 100e-3, 'reading': 0.50, 'range': 0.02},
-                      10   : {'mrange': 100e-3, 'reading': 0.10, 'range': 0.02},
-                      20e3 : {'mrange': 100e-3, 'reading': 0.05, 'range': 0.02},
-                      50e3 : {'mrange': 100e-3, 'reading': 0.07, 'range': 0.03},
-                      100e3: {'mrange': 100e-3, 'reading': 0.15, 'range': 0.05},
-                      300e3: {'mrange': 100e-3, 'reading': 1.00, 'range': 0.10}
+            750   : { 5    : {'mrange': 750, 'reading': 0.50, 'range': 0.02},
+                      10   : {'mrange': 750, 'reading': 0.10, 'range': 0.02},
+                      20e3 : {'mrange': 750, 'reading': 0.05, 'range': 0.02},
+                      50e3 : {'mrange': 750, 'reading': 0.07, 'range': 0.03},
+                      100e3: {'mrange': 750, 'reading': 0.15, 'range': 0.05},
+                      300e3: {'mrange': 750, 'reading': 1.00, 'range': 0.10}
                     }
         },
 
