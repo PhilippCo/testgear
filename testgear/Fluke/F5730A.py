@@ -2,21 +2,22 @@
 
 import testgear.base_classes as base
 import numpy as np
+import time
 
 class F5730A(base.source):
 
     def init(self):
-        self.set_timeout(10)
+        self.set_timeout(60)
         self.idstr = self.query("*IDN?").strip()
 
-        idstring = self.idstr.split(",")
-        if idstring[0] == "FLUKE" and idstring[1] == "5730A":
-            print("Fluke 5730A calibrator detected")
-        else:
-            print("no Fluke 5730A detected!") #raise error?
+        # idstring = self.idstr.split(",")
+        # if idstring[0] == "FLUKE" and idstring[1] == "5730A":
+        #     print("Fluke 5730A calibrator detected")
+        # else:
+        #     print("no Fluke 5730A detected!") #raise error?
         
 
-    def set_output(self, voltage=None, current=None, enabled=True, frequency=0, resistance=None, fourWire=False, channel=1):
+    def set_output(self, voltage=None, current=None, enabled=True, frequency=0, resistance=None, fourWire=False, auxCurr=True, channel=1):
         if enabled:
 
             if voltage is not None:
@@ -25,6 +26,13 @@ class F5730A(base.source):
             elif current is not None:
                 unit  = "A"
                 value = current
+                
+                #use auxillary current output connector
+                if auxCurr:
+                    self.write('CUR_POST AUX')
+                else:
+                    self.write('CUR_POST NORMAL')
+            
             elif resistance is not None:
                 unit  = "OHM"
                 value = resistance
@@ -35,6 +43,8 @@ class F5730A(base.source):
 
             #set output BEFORE 4W to make sure it is available
             self.write("OUT {0:0.6g}{1}, {2:0.6g}Hz;*CLS;OPER".format(value, unit, frequency))
+
+
             
             if fourWire:
                 self.write("EXTSENSE ON")
@@ -69,11 +79,13 @@ class F5730A(base.source):
         
         
     def __wait_for_settling(self):
-        settled = False
-        while not settled:
-            isr = int(self.query("ISR?"))
-            #print(isr)
-            settled = bool(isr & 2**12) #Check for SETTLED Bit
+        #settled = False
+        #while not settled:
+        #    time.sleep(1)
+        #    isr = int(self.query("ISR?"))
+        #    #print(isr)
+        #    settled = bool(isr & 2**12) #Check for SETTLED Bit
+        self.query('*OPC?')
 
     
     def get_cal_status(self):

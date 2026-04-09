@@ -57,8 +57,8 @@ class HP34401A(base.meter):
         },
 
         'OHM2W': {
-            100   : {'mrange': 100  , 'reading': 0.010, 'range': 0.004},
-            1e3   : {'mrange': 1e3  , 'reading': 0.010, 'range': 0.001},
+            100   : {'mrange': 100  , 'reading': 0.010, 'range': 0.004+0.5}, #0.5R added for cabling
+            1e3   : {'mrange': 1e3  , 'reading': 0.010, 'range': 0.001+0.05}, #0.5R added for cabling
             10e3  : {'mrange': 10e3 , 'reading': 0.010, 'range': 0.001},
             100e3 : {'mrange': 100e3, 'reading': 0.010, 'range': 0.001},
             1e6   : {'mrange': 1e6  , 'reading': 0.010, 'range': 0.001},
@@ -84,22 +84,111 @@ class HP34401A(base.meter):
         },
         
         'ACI': {
-            1 : { 5   : {'mrange': 1, 'reading': 0.0050, 'range': 0.0035},
-                  10  : {'mrange': 1, 'reading': 0.0050, 'range': 0.0035},
-                  5e3 : {'mrange': 1, 'reading': 0.0050, 'range': 0.0035}
+            1 : { 5   : {'mrange': 1, 'reading': 1.00, 'range': 0.04},
+                  10  : {'mrange': 1, 'reading': 0.30, 'range': 0.04},
+                  5e3 : {'mrange': 1, 'reading': 0.10, 'range': 0.04}
                 },
             3 : {
-                  5   : {'mrange': 3, 'reading': 0.0050, 'range': 0.0035},
-                  10  : {'mrange': 3, 'reading': 0.0050, 'range': 0.0035},
-                  5e3 : {'mrange': 3, 'reading': 0.0050, 'range': 0.0035}
+                  5   : {'mrange': 3, 'reading': 1.10, 'range': 0.06},
+                  10  : {'mrange': 3, 'reading': 0.35, 'range': 0.06},
+                  5e3 : {'mrange': 3, 'reading': 0.15, 'range': 0.06}
                 }
-        }
+        },
         
+        'FREQ': {
+            5     : {'mrange': 10   , 'reading': 0.1, 'range': 0},
+            10    : {'mrange': 100  , 'reading': 0.05, 'range': 0},
+            40    : {'mrange': 1e3  , 'reading': 0.03, 'range': 0},
+            300e3 : {'mrange': 300e3, 'reading': 0.01, 'range': 0}
+        }
         
     }  
     
     spec = { '1 year': spec_1year }
+
+    # Zero Calibration with Short
+    cal1 = [
+        {'mode': 'DCI', 'mrange': 10e-3 , 'value': 0 , 'frequency': 0},
+        {'mode': 'DCI', 'mrange': 100e-3, 'value': 0 , 'frequency': 0},
+        {'mode': 'DCI', 'mrange': 1     , 'value': 0 , 'frequency': 0},
+        {'mode': 'DCI', 'mrange': 3     , 'value': 0 , 'frequency': 0},
+        
+        {'mode': 'DCV', 'mrange': 100e-3, 'value': 0    , 'frequency': 0},
+        {'mode': 'DCV', 'mrange': 1     , 'value': 0    , 'frequency': 0},
+        {'mode': 'DCV', 'mrange': 10    , 'value': 0    , 'frequency': 0},
+        {'mode': 'DCV', 'mrange': 100   , 'value': 0    , 'frequency': 0},
+        {'mode': 'DCV', 'mrange': 1000  , 'value': 0    , 'frequency': 0},
+        
+        {'mode': 'OHM2W', 'mrange': 100  , 'value': 0  , 'frequency': 0},
+        {'mode': 'OHM2W', 'mrange': 1e3  , 'value': 0  , 'frequency': 0},
+        {'mode': 'OHM2W', 'mrange': 10e3 , 'value': 0  , 'frequency': 0},
+        {'mode': 'OHM2W', 'mrange': 100e3, 'value': 0  , 'frequency': 0},
+        {'mode': 'OHM2W', 'mrange': 1e6  , 'value': 0  , 'frequency': 0},
+        {'mode': 'OHM2W', 'mrange': 10e6 , 'value': 0  , 'frequency': 0},
+        {'mode': 'OHM2W', 'mrange': 100e6, 'value': 0  , 'frequency': 0},
+
+        {'mode': 'OHM4W', 'mrange': 100  , 'value': 0  , 'frequency': 0},
+        {'mode': 'OHM4W', 'mrange': 1e3  , 'value': 0  , 'frequency': 0},
+        {'mode': 'OHM4W', 'mrange': 10e3 , 'value': 0  , 'frequency': 0},
+        {'mode': 'OHM4W', 'mrange': 100e3, 'value': 0  , 'frequency': 0},
+    ]
+
+    # Calibration against Calibrator
+    cal2 = [
+        {'mode': 'DCV', 'mrange': 100e-3, 'value': 100e-3, 'frequency': 0},
+        {'mode': 'DCV', 'mrange': 1     , 'value': 1     , 'frequency': 0},
+        {'mode': 'DCV', 'mrange': 10    , 'value': 10    , 'frequency': 0},
+        {'mode': 'DCV', 'mrange': 10    , 'value': -10   , 'frequency': 0},
+        {'mode': 'DCV', 'mrange': 100   , 'value': 100   , 'frequency': 0},
+        {'mode': 'DCV', 'mrange': 1000  , 'value': 1000  , 'frequency': 0},
+
+        {'mode': 'OHM2W', 'mrange': 100  , 'value': 100  , 'frequency': 0},
+        {'mode': 'OHM2W', 'mrange': 1e3  , 'value': 1e3  , 'frequency': 0},
+        {'mode': 'OHM2W', 'mrange': 10e3 , 'value': 10e3 , 'frequency': 0},
+        {'mode': 'OHM2W', 'mrange': 100e3, 'value': 100e3, 'frequency': 0},
+        {'mode': 'OHM2W', 'mrange': 1e6  , 'value': 1e6  , 'frequency': 0},
+        {'mode': 'OHM2W', 'mrange': 10e6 , 'value': 10e6 , 'frequency': 0},
+        {'mode': 'OHM2W', 'mrange': 100e6 , 'value': 10e6 , 'frequency': 0},
+        
+        {'mode': 'OHM4W', 'mrange': 100  , 'value': 100  , 'frequency': 0},
+        {'mode': 'OHM4W', 'mrange': 1e3  , 'value': 1e3  , 'frequency': 0},
+        {'mode': 'OHM4W', 'mrange': 10e3 , 'value': 10e3 , 'frequency': 0},
+        {'mode': 'OHM4W', 'mrange': 100e3, 'value': 100e3, 'frequency': 0},
+        {'mode': 'OHM4W', 'mrange': 1e6  , 'value': 1e6  , 'frequency': 0},
+        {'mode': 'OHM4W', 'mrange': 10e6 , 'value': 10e6 , 'frequency': 0},
+
+        {'mode': 'DCI', 'mrange': 10e-3 , 'value': 10e-3 , 'frequency': 0},
+        {'mode': 'DCI', 'mrange': 100e-3, 'value': 100e-3, 'frequency': 0},
+        {'mode': 'DCI', 'mrange': 1     , 'value': 1     , 'frequency': 0},
+        {'mode': 'DCI', 'mrange': 3     , 'value': 2     , 'frequency': 0},
+
+
+        {'mode': 'ACV', 'mrange': 100e-3, 'value': 10e-3 , 'frequency': 1e3  },
+        {'mode': 'ACV', 'mrange': 100e-3, 'value': 100e-3, 'frequency': 1e3  },
+        {'mode': 'ACV', 'mrange': 100e-3, 'value': 100e-3, 'frequency': 50e3 },
+        {'mode': 'ACV', 'mrange': 1     , 'value': 1     , 'frequency': 1e3  },
+        {'mode': 'ACV', 'mrange': 1     , 'value': 1     , 'frequency': 50e3 },
+        {'mode': 'ACV', 'mrange': 10    , 'value': 10    , 'frequency': 1e3  },
+        {'mode': 'ACV', 'mrange': 10    , 'value': 10    , 'frequency': 50e3 },
+        {'mode': 'ACV', 'mrange': 10    , 'value': 10    , 'frequency': 10   },
+        {'mode': 'ACV', 'mrange': 100   , 'value': 100   , 'frequency': 1e3  },
+        {'mode': 'ACV', 'mrange': 100   , 'value': 100   , 'frequency': 50e3 },
+        {'mode': 'ACV', 'mrange': 750   , 'value': 750   , 'frequency': 1e3  },
+        {'mode': 'ACV', 'mrange': 750   , 'value': 750   , 'frequency': 50e3 },
+        
+        {'mode': 'ACI', 'mrange': 1     , 'value': 1     , 'frequency': 1e3},
+        {'mode': 'ACI', 'mrange': 3     , 'value': 2     , 'frequency': 1e3},
+
+        {'mode': 'FREQ', 'mrange': 100e-3, 'value': 10e-3 , 'frequency': 100},
+        {'mode': 'FREQ', 'mrange': 1     , 'value': 1     , 'frequency': 100e3}
+
+        ]
     
+    callist = [
+        #{'instruction': "Connect the Calibration Short 34172B to the 34401A front terminals", 'calpoints': cal1, 'calibrator in use': False},
+        #{'instruction': "Connect the Calibration Short 34172B to the 34401A rear terminals", 'calpoints': cal1, 'calibrator in use': False},
+        {'instruction': "Connect the Fluke 5730A to the 34401A", 'calpoints': cal2, 'calibrator in use': True}
+    ]
     
     def init(self):
         self.set_timeout(10)

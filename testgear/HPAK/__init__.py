@@ -6,6 +6,7 @@ from .HP3488A import HP3488A
 from .HP53131A import HP53131A
 from .HP603xA import HP603xA
 from .K34461A import K34461A
+from .K34465A import K34465A
 from .K34470A import K34470A
 from .HP3478A import HP3478A
 from .B2902A import B2902A

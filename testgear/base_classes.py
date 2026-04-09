@@ -164,9 +164,14 @@ class meter(instrument):
         
         if mode == "FREQ":
             value = frequency
+
+        if mrange == None:
+            search = value
+        else:
+            search = mrange
             
         for prange in self.spec[calperiod][mode].keys():
-            if prange >= value:
+            if prange >= search:
                 break
         
         #for AC we also need to consider the frequency
@@ -182,7 +187,7 @@ class meter(instrument):
     
     def get_error(self, value, mode='DCV', mrange=None, frequency=0, calperiod="1 year"):
         spec = self.get_spec(value=value, mode=mode, mrange=mrange, frequency=frequency, calperiod=calperiod)
-        
+        print(spec)
         if mode == "FREQ":
             return np.abs(frequency * spec["reading"]*1e-2 + spec["mrange"] * spec["range"]*1e-2)
             
